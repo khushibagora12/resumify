@@ -1,6 +1,6 @@
 'use client'
 
-import { poppins } from "../ui/fonts"
+import { poppins } from "../../ui/fonts"
 import Image from "next/image"
 import { useForm } from 'react-hook-form';
 import { z } from "zod"
@@ -12,9 +12,9 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from '../ui/form';
-import { Input } from "../ui/input";
-import { Button } from '../ui/button';
+} from '../../ui/form';
+import { Input } from "../../ui/input";
+import { Button } from '../../ui/button';
 
 // defining the schema
 const formSchema = z.object({

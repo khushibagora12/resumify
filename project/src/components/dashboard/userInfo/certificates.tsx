@@ -1,6 +1,6 @@
 'use client'
 
-import { poppins } from "../ui/fonts"
+import { poppins } from "../../ui/fonts"
 import Image from "next/image"
 import { useForm } from 'react-hook-form';
 
@@ -11,9 +11,9 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from '../ui/form';
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+} from '../../ui/form';
+import { Input } from "../../ui/input";
+import { Button } from "../../ui/button";
 import { useState } from "react";
 import Link from "next/link";
 export default function Certificates() {

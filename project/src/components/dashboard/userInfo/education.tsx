@@ -1,7 +1,7 @@
 'use client'
 
 import Image from "next/image"
-import { poppins } from "../ui/fonts"
+import { poppins } from "../../ui/fonts"
 import { useForm } from 'react-hook-form';
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -12,9 +12,9 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from '../ui/form';
-import { Input } from "../ui/input";
-import { Button } from '../ui/button';
+} from '../../ui/form';
+import { Input } from "../../ui/input";
+import { Button } from '../../ui/button';
 import { fields } from "@hookform/resolvers/ajv/src/__tests__/__fixtures__/data.js";
 
 const formSchema = z.object({
