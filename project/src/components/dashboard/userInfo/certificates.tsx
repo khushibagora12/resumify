@@ -3,6 +3,7 @@
 import { poppins } from "../../ui/fonts"
 import Image from "next/image"
 import { useForm } from 'react-hook-form';
+import { useEffect } from "react";
 
 import {
     Form,
@@ -16,7 +17,7 @@ import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
 import { useState } from "react";
 import Link from "next/link";
-export default function Certificates() {
+export default function Certificates({onDataChange} : {onDataChange : (data : any) => void}) {
     const [pdfArr, setPdfArr] = useState<File[]>([]);
     const [pdf, setPdf] = useState<File | null>(null);
 
@@ -37,6 +38,7 @@ export default function Certificates() {
             file: ''
         }
     })
+    
     return (
         <>
             <div>

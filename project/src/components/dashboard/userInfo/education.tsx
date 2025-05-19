@@ -5,6 +5,8 @@ import { poppins } from "../../ui/fonts"
 import { useForm } from 'react-hook-form';
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useEffect } from "react";
+
 import {
     Form,
     FormControl,
@@ -14,8 +16,7 @@ import {
     FormMessage,
 } from '../../ui/form';
 import { Input } from "../../ui/input";
-import { Button } from '../../ui/button';
-import { fields } from "@hookform/resolvers/ajv/src/__tests__/__fixtures__/data.js";
+
 
 const formSchema = z.object({
     school10 : z.string().min(1,{
@@ -63,7 +64,7 @@ const formSchema = z.object({
     })
 });
 
-export default function Education(){    
+export default function Education({onDataChange} : {onDataChange : (data : any) => void}){    
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -83,6 +84,7 @@ export default function Education(){
         const onSubmit = (data: any) => {
             console.log("submitted data: ", data);
         };
+       
     return(
         <>
         <div>
@@ -239,7 +241,7 @@ export default function Education(){
 
                         />
                     </div>
-                    {/* <Button type="submit">submit</Button> */}
+                    {/* <Button type="submit">Continue</Button> */}
                 </form>
             </Form>
 

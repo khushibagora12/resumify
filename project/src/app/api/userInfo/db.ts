@@ -1,10 +1,10 @@
-import mongoose from "mongoose"
-const UserInfo = new mongoose.Schema(
+import mongoose, { Schema, models, model } from "mongoose";
+const userInfoSchema = new mongoose.Schema(
     {
         fullName : String,
-        heroTitle : String,
         profession : String,
-        bio : String,
+        email : String,
+        contact : String,
         about : String,
         technicalSkills : [String],
         nontechnicalSkills : [String],
@@ -27,5 +27,5 @@ const UserInfo = new mongoose.Schema(
         ]
     });
 
-   const Info = mongoose.models.info||mongoose.model('userInfo', UserInfo);
+   const Info = mongoose.models.user||mongoose.model('usersInfo', userInfoSchema );
    export default Info;

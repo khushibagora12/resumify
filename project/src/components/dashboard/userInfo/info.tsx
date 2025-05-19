@@ -5,6 +5,7 @@ import Image from "next/image"
 import { useForm } from 'react-hook-form';
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useEffect, useState } from "react";
 import {
     Form,
     FormControl,
@@ -48,9 +49,7 @@ export default function UserInfo() {
             about: ''
         },
     });
-    const onSubmit = (data: any) => {
-        console.log("submitted data: ", data);
-    };
+    
     return (
         <>
             <div className="pl-10">
@@ -63,7 +62,7 @@ export default function UserInfo() {
                 <p className="text-2xl font-medium">Write once, use anywhere</p>
             </div>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10 ml-10">
+                <form className="space-y-10 ml-10">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-0">
                         <FormField
                             control={form.control}
@@ -132,7 +131,7 @@ export default function UserInfo() {
                             </FormItem>
                         )}
                     />
-                    {/* <Button type='submit'>Submit</Button> */}
+                    {/* <Button type='submit'>Continue</Button> */}
                 </form>
             </Form>
         </>

@@ -9,13 +9,13 @@ const certificateSchema = z.object({
 });
 
 const infoStructure = z.object({
-    fullName: z.string().max(50).min(4),
-    heroTitle: z.string().max(50).min(4),
+    fullName: z.string().max(50).min(4),    
     profession: z.string().max(20).min(4),
-    bio: z.string().min(10).max(100),
+    email: z.string().min(4).max(40).email(),
+    contact: z.string().max(10),
     about : z.string().min(100).max(500),
     technicalSkills: z.string().min(3).max(50).array(),
-    nonTechnicalSkills: z.string().min(3).max(50).array(),
+    nontechnicalSkills: z.string().min(3).max(50).array(),
     school10: z.string().min(3).max(100),
     board10: z.string().min(3).max(10),
     percentage10: z.number().min(0).max(100),
@@ -43,18 +43,18 @@ export async function POST(req: Request) {
             return NextResponse.json({ erroe: parsed.error }, { status: 400 });
         }
 
-        const { fullName, heroTitle, profession, bio, about, technicalSkills, nonTechnicalSkills,
+        const { fullName, profession, email, contact, about, technicalSkills, nontechnicalSkills,
             school10, board10, percentage10, school12, board12, percentage12, college, degree,
             cgpa, startYear, endYear, certificates } = parsed.data;
 
-        const info = new Info({
+        const user = new Info({
            fullName,
-           heroTitle,
            profession,
-           bio,
+           email,
+           contact,
            about,
            technicalSkills,
-           nonTechnicalSkills,
+           nontechnicalSkills,
            school10,
            board10,
            percentage10,
@@ -68,9 +68,9 @@ export async function POST(req: Request) {
            endYear,
            certificates
     });
-    console.log("Mongoose model instance:", info);
+    console.log("Mongoose model instance:", user);
     console.log(typeof startYear, endYear);
-    await info.save();
+    await user.save();
     console.log("info saved")
     return NextResponse.json({message : "user info saved successfully"}, {status : 201});
 

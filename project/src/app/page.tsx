@@ -5,6 +5,7 @@ import Navbar from "@/components/navbar";
 import ContactUs from "@/components/contact"
 
 export default function Home() {
+  
   return (
       <main>
         <Navbar/>
@@ -20,7 +21,7 @@ export default function Home() {
         <section id="contact" className="h-screen">
           <ContactUs/>
         </section>
-        {/* <UserInfo/> */}
+  
       </main>
   );
 }

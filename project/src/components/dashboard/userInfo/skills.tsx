@@ -5,6 +5,8 @@ import Image from "next/image"
 import { useForm } from 'react-hook-form';
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useEffect } from "react";
+
 import {
     Form,
     FormControl,
@@ -17,7 +19,7 @@ import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
 import { useState } from "react";
 
-export default function Skills() {
+export default function Skills({onDataChange} : {onDataChange : (data : any) => void}) {
     const [Tskills, setTSkills] = useState<string[]>([]);
     const [Tinput, setTInput] = useState('');
     const [skills, setSkills] = useState<string[]>([]);
@@ -110,6 +112,7 @@ export default function Skills() {
                     </div>
                 </div>
             </div>
+        
         </>
     )
 }
