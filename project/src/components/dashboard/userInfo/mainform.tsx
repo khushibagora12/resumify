@@ -1,590 +1,196 @@
 'use client'
+import Certificates from "@/components/dashboard/userInfo/certificates";
+import Education from "@/components/dashboard/userInfo/education";
+import UserInfo from "@/components/dashboard/userInfo/info";
+import Skills from "@/components/dashboard/userInfo/skills";
+import { Button } from "@/components/ui/button";
+import React, { useEffect, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import Socials from "./socials";
+import Projects from "./projects";
+import Experience from "./experience";
+import Hobbies from "./hobbies";
+import Languages from "./language";
+import Image from "next/image";
+import { poppins } from "@/components/ui/fonts";
 
-import { poppins } from "../../ui/fonts"
-import Image from "next/image"
-import { useForm } from 'react-hook-form';
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useEffect, useState } from "react";
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from '../../ui/form';
-import { Input } from "../../ui/input";
-import { Button } from '../../ui/button';
-import Link from "next/link";
-
-const formSchema = z.object({
-    fullName: z.string().min(3, {
-        message: "Name must be at least 3 characters.",
-    }),
-    profession: z.string().min(3, {
-        message: "Profession must be at least 5 characters."
-    }),
-    email: z.string().email("This is not a valid email.").min(3, {
-        message: "Email must be at least 5 characters."
-    }),
-    contact: z.string().min(10, {
-        message: "contact number must be of 10 numbers."
-    }).max(10, {
-        message: "contact number must be of 10 numbers."
-    }),
-    about: z.string().min(1, {
-        message: "This field cannot be empty"
-    }),
-    Tskills: z.string().min(3).max(20).array(),
-    skills: z.string().min(3).max(20).array(),
-    school10: z.string().min(1, {
-        message: "This field cannot be empty"
-    }),
-    board10: z.string().min(1, {
-        message: "This field cannot be empty"
-    }),
-    percentage10: z.number().min(1, {
-        message: "Enter valid percentage value"
-    }).max(100, {
-        message: "Enter valid percentage value"
-    }),
-    school12: z.string().min(1, {
-        message: "This field cannot be empty"
-    }),
-    board12: z.string().min(1, {
-        message: "This field cannot be empty"
-    }),
-    percentage12: z.number().min(1, {
-        message: "Enter valid percentage value"
-    }).max(100, {
-        message: "Enter valid percentage value"
-    }),
-    college: z.string().min(1, {
-        message: "This field cannot be empty"
-    }),
-    degree: z.string().min(1, {
-        message: "This field cannot be empty"
-    }),
-    cgpa: z.number().min(1, {
-        message: "Enter valid cgpa value"
-    }).max(10, {
-        message: "Enter valid cgpa value"
-    }),
-    startYear: z.number().min(2000, {
-        message: "This field cannot be empty"
-    }).max(2030, {
-        message: "This field cannot be empty"
-    }),
-    endYear: z.number().min(2000, {
-        message: "This field cannot be empty"
-    }).max(2030, {
-        message: "This field cannot be empty"
-    }),
-    certificates: z.string().min(2, {
-        message: "This field cannot be empty"
-    }).max(20),
-    file: z.any()
-
-});
-export default function Alldata() {
-    const [formData, setFormData] = useState({
-        fullName: '',
-        profession: '',
-        email: '',
-        contact: '',
-        about: '',
-        technicalSkills: [],
-        nontechnicalSkills: [],
-        school10: '',
-        board10: '',
-        percentage10: 0,
-        school12: '',
-        board12: '',
-        percentage12: 0,
-        college: '',
-        degree: '',
-        cgpa: 0,
-        startYear: 0,
-        endYear: 0,
-        certificates: [{
-            certName: '',
-            file: null
-        }]
+export default function AllData() {
+    const [info, setInfo] = useState<{
+        fullName: string,
+        profession: string,
+        email: string,
+        contact: string,
+        about: string
+    }>({fullName: "",
+        profession: "",
+        email: "",
+        contact: "",
+        about: ""});
+    const [skills, setSkills] = useState<{
+        technicalSkills: [string],
+        nontechnicalSkills: [string]
+    }>({
+        technicalSkills: [''],
+        nontechnicalSkills: ['']
     });
-    //skills state
-    const [Tskills, setTSkills] = useState<string[]>([]);
-    const [Tinput, setTInput] = useState('');
-    const [skills, setSkills] = useState<string[]>([]);
-    const [input, setInput] = useState('');
+    const [education, setEducation] = useState<{
+        school10: string,
+        board10: string,
+        percentage10: string,
+        school12: string,
+        board12: string,
+        percentage12: string,
+        college: string,
+        degree: string,
+        cgpa: string,
+        startYear: string,
+        endYear: string,
+    }>({
+        school10: "",
+        board10: "",
+        percentage10: "",
+        school12: "",
+        board12: "",
+        percentage12: "",
+        college: "",
+        degree: "",
+        cgpa: "",
+        startYear: "",
+        endYear: "",});
+    const [certificates, setCertificates] = useState({});
+    const [hobbies, setHobbies] = useState({});
+    const [experience, setExperience] = useState({});
+    const [languages, setLanguages] = useState({});
+    const [socials, setSocials] = useState({});
+    const [projects, setProjects] = useState({});
+    const [id, setId] = useState("");
+    const [guide, setGuide] = useState(false);
 
-    //certificate state
-    const [pdfArr, setPdfArr] = useState<File[]>([]);
-    const [pdf, setPdf] = useState<File | null>(null);
-    const [certArr, setCertArr] = useState<string[]>([]);
-    const [certName, setCertName] = useState('');
-
-    function handleAddSkill() {
-        if (input !== '') {
-            setSkills([...skills, input]);
-            setInput('');
-            setFormData({
-                ...formData,
-                nontechnicalSkills: [...skills, input] 
+    useEffect(() => {
+        const getUserInfo = async () => {
+            const res = await fetch('/api/authentication/signup', {
+                method: "GET"
             })
+            const response = await res.json()
+            setId(response.id)
+        }
+        getUserInfo()
+    }, [])
 
-        }
-    }
-    function handleAddTSkill() {
-        if (Tinput !== '') {
-            setTSkills([...Tskills, Tinput]);
-            setTInput('');
-            setFormData({
-                ...formData,
-                technicalSkills: [...Tskills, Tinput] 
-            })
-        }
-    }
-    function handleAddFile() {
-        if (pdf !== null && certName !== '') {
-            setPdfArr([...pdfArr, pdf]);
-            setCertArr([...certArr, certName])
-            
-            setPdf(null);
-            setCertName('');
-        }
+    const allData = {
+        id: id,
+        fullName: info.fullName,
+        profession: info.profession,
+        email: info.email,
+        contact: info.contact,
+        about: info.about,
+        socials: socials,
+        technicalSkills: skills.technicalSkills,
+        nontechnicalSkills: skills.nontechnicalSkills,
+        hobbies: hobbies,
+        projects: projects,
+        experience: experience,
+        school10: education.school10,
+        board10: education.board10,
+        percentage10: education.percentage10,
+        school12: education.school12,
+        board12: education.board12,
+        percentage12: education.percentage12,
+        college: education.college,
+        degree: education.degree,
+        cgpa: education.cgpa,
+        startYear: education.startYear,
+        endYear: education.endYear,
+        certificates: certificates,
+        languages: languages,
     }
 
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            fullName: '',
-            profession: '',
-            email: '',
-            contact: '',
-            about: '',
-            skills: [],
-            Tskills: [],
-            school10: '',
-            board10: '',
-            percentage10: undefined,
-            school12: '',
-            board12: '',
-            percentage12: undefined,
-            college: '',
-            degree: '',
-            cgpa: undefined,
-            startYear: undefined,
-            endYear: undefined,
-            certificates: '',
-            file: ''
-        },
-    });
-    const handleAllData = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        })
-    }
-    console.log(formData);
-    const onSubmit = async (formData: any) => {
-        console.log("submitted data: ", formData);
-        try {
-            const res = await fetch('/api/userInfo', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
-            })
-            const data = await res.json();
-            if (!data.ok) {
-                throw new Error(data.message || 'failed.');
+    const submitHandler = async (e: React.FormEvent) => {
+        e.preventDefault()
+        if (Object.keys(info).length === 0 || Object.keys(skills).length === 0 || Object.keys(education).length === 0 || Object.keys(experience).length === 0 ||
+            Object.keys(hobbies).length === 0 || Object.keys(languages).length === 0 || Object.keys(certificates).length === 0 || Object.keys(socials).length === 0 || Object.keys(projects).length === 0) {
+            toast("empty fields")
+        }
+        else {
+            console.log("in submithandler")
+            try {
+                const res = await fetch('api/userInfo', {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/ json"
+                    },
+                    body: JSON.stringify(allData)
+                })
+                const result = await res.json()
+                toast("info saved: ", result.message)
             }
-            alert(data.message);
-
+            catch (error: unknown) {
+                console.log("error in posting data", error)
+            }
         }
-        catch (e) {
-            console.log("error caught")
-        }
-    };
+    }
     return (
         <>
-            <div className="pl-10">
-                <h1 className={`${poppins.className} text-3xl`}>Welcome user</h1>
-                <h2 className={`${poppins.className} text-lg text-[#ADA7A7]`}>Date</h2>
+            <div className="h-screen w-[90%] flex justify-center items-center bg-[#E6F0F4]">
+
+                <div className=" rounded-3xl shadow-[0_0_20px_10px_rgba(152,152,152,0.3)] h-[90%] w-[90%] p-10 overflow-y-scroll">
+                    <section className="min-h-screen">
+                        <UserInfo onDataChange={(data) => { setInfo(data) }} />
+                    </section>
+                    <section className="min-h-screen">
+                        <Socials onDataChange={(data) => { setSocials(data) }} />
+                    </section>
+                    <section className="min-h-screen" >
+                        <Skills onDataChange={(data) => { setSkills(data) }} />
+                    </section>
+                    <section className="min-h-screen" >
+                        <Hobbies onDataChange={(data) => { setHobbies(data) }} />
+                    </section>
+                    <section className="min-h-screen">
+                        <Projects onDataChange={(data) => { setProjects(data) }} />
+                    </section>
+                    <section className="min-h-screen">
+                        <Experience onDataChange={(data) => { setExperience(data) }} />
+                    </section>
+                    <section className="min-h-screen">
+                        <Education onDataChange={(data) => { setEducation(data) }} />
+                    </section>
+                    <section className="min-h-screen">
+                        <Certificates onDataChange={(data) => { setCertificates(data) }} />
+                    </section>
+                    <section className="min-h-screen">
+                        <Languages onDataChange={(data) => { setLanguages(data) }} />
+                    </section>
+                    <Button className="w-full bg-[#aebecf] text-[#123458] font-bold p-3 rounded-md hover:outline-1 hover:outline-white hover:shadow-gray-400 hover:shadow-md active:bg-[#97a9bc]" type='submit' onClick={submitHandler}>Submit</Button>
+                </div>
+                <div className="fixed top-0 right-0 m-3" >
+                    <Image src={'/guide.png'} height={30} width={50} alt="guide" className="fixed top-0 right-0 m-3" onClick={() => {
+                        setGuide(!guide)
+                    }} />
+                    <div className={`${guide ? '' : 'hidden'} h-auto w-200 rounded-2xl border-2 border-gray-300 bg-white p-5`}>
+                        <h1 className={`${poppins.className} font-medium text-2xl m-2`}>How to use Resumify</h1>
+                        <ol className="list-decimal m-10">
+                            <li className="font-medium">Fill Out the Resume Form
+                                <ul className="list-disc font-normal text-gray-700">
+                                    <li>On the Dashboard, you'll find a form with 9 sections: <br />Basic Info, Socials, Skills, Hobbies, Projects, Experience, Education, Certificates, Languages</li>
+                                    <li>Enter your details in each section.</li>
+                                    <li>After filling a section, make sure to lock it to save the information. <br />⚠️ If you don't lock a section, your data won't be saved. </li>
+                                    <li>After completing all sections, click the Submit button at the bottom of the form.</li>
+                                </ul>
+                            </li>
+                            <hr className="m-3 text-gray-400"/>
+                            <li className="font-medium">View & Edit Your Saved Information
+                                <ul className="list-disc font-normal text-gray-700">
+                                    <li>Use the My Information tab in the sidebar to view your saved details.</li>
+                                    <li>You can also edit your information from this section. <br />✏️ Note: When editing, your previous input will be replaced. To keep old data along with new, include all items again. </li>
+                                    
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
             </div>
-
-            <div className="m-10">
-                <p className="flex text-3xl font-medium"><Image src={'/file.png'} alt="info" height={40} width={40} />Info</p>
-                <p className="text-2xl font-medium">Write once, use anywhere</p>
-            </div>
-            <Form {...form}>
-                <form className="space-y-10 ml-10" onSubmit={form.handleSubmit(onSubmit)}>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-0">
-                        <FormField
-                            control={form.control}
-                            name="fullName"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className={`text-md ${poppins.className} font-semibold`}>Full Name</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Enter your name" {...field} value={formData.fullName} onChange={handleAllData} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="profession"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className={`text-md ${poppins.className} font-semibold`}>Profession</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Enter your profession" {...field} value={formData.profession} onChange={handleAllData} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className={`text-md ${poppins.className} font-semibold `}>Email</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Enter your email" {...field} value={formData.email} onChange={handleAllData} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="contact"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className={`text-md ${poppins.className} font-semibold`}>Contact no.</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Enter your contact number" {...field} value={formData.contact} onChange={handleAllData} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-
-                        />
-                    </div>
-                    <FormField
-                        control={form.control}
-                        name="about"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel className={`text-md ${poppins.className} font-semibold `}>About</FormLabel>
-                                <FormControl>
-                                    <textarea placeholder="A more detailed summary of yourself and what you do." className="h-30 w-[90%] bg-white p-5 rounded-xl outline-none shadow-gray-300 shadow-sm" {...field} value={formData.about} onChange={handleAllData} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    {/* <Button type='submit'>Continue</Button> */}
-                    {/* skills */}
-                    <div className="min-h-screen">
-                        <div className="mt-20">
-                            <p className="flex text-3xl font-medium" ><Image src={'/skills.png'} alt="info" height={40} width={40} className="mr-2" />Skills</p>
-                        </div>
-                        <div className={`${poppins.className} text-xl font-medium m-5 ml-0`}>Add Skills</div>
-                        <div className="grid grid-cols-2">
-                            <div className=" flex">
-                                <FormField
-                                    control={form.control}
-                                    name="Tskills"
-                                    render={({ field }) => (
-                                        <FormItem className="w-[90%]">
-                                            <FormControl>
-                                                <Input placeholder="Technical skills" {...field}
-                                                    id="TskillInput" value={Tinput} onChange={(e) => {
-                                                        setTInput(e.target.value)
-                                                    }}
-                                                    className="border-gray-400 border-1 focus:ring-2 ring-gray-400 w-full" />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <Button type="button" onClick={handleAddTSkill}>Add</Button>
-                            </div>
-                            <div className="ml-10 flex">
-                                <FormField
-                                    control={form.control}
-                                    name="skills"
-                                    render={({ field }) => (
-                                        <FormItem className="w-[90%]">
-                                            <FormControl>
-                                                <Input placeholder="Non-technical skills" {...field}
-                                                    id="skillInput" value={input} onChange={(e) => {
-                                                        setInput(e.target.value)
-                                                    }}
-                                                    className="border-gray-400 border-1 focus:ring-2 ring-gray-400 w-full" />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <Button type="button" onClick={handleAddSkill}>Add</Button>
-                            </div>
-                        </div>
-                        <hr className="m-10 text-gray-400" />
-                        <div className="grid grid-cols-2">
-                            <div className="ml-10">
-                                {Tskills.map((skill, index) => (
-                                    <div key={index} className="text-lg m-3 font-medium ">
-                                        <li>{skill}</li>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="ml-10">
-                                {skills.map((skill, index) => (
-                                    <div key={index} className="text-lg m-3 font-medium ">
-                                        <li>{skill}</li>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* education */}
-                    <div className="min-h-scree">
-                        <div className="m-10 ml-0">
-                            <p className="flex text-3xl font-medium" ><Image src={'/education.png'} alt="info" height={40} width={40} className="mr-2" />Education</p>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-y-10 gap-x-0">
-                            <FormField
-                                control={form.control}
-                                name="school10"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className={`text-md ${poppins.className} font-semibold`}>School</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="School name(10th)" {...field} value={formData.school10} onChange={handleAllData} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="board10"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className={`text-md ${poppins.className} font-semibold`}>Board</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Enter board(10th)" {...field} value={formData.board10} onChange={handleAllData} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="percentage10"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className={`text-md ${poppins.className} font-semibold `}>Percentage(out of 100)</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="10th %age" {...field} value={formData.percentage10} onChange={handleAllData} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="school12"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className={`text-md ${poppins.className} font-semibold`}>School</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="School name(12th)" {...field} value={formData.school12} onChange={handleAllData} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="board12"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className={`text-md ${poppins.className} font-semibold`}>Board</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Enter board(12th)" {...field} value={formData.board12} onChange={handleAllData} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="percentage12"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className={`text-md ${poppins.className} font-semibold `}>Percentage(out of 100)</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="12th %age" {...field} value={formData.percentage12} onChange={handleAllData} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="college"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className={`text-md ${poppins.className} font-semibold`}>College</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="College name" {...field} value={formData.college} onChange={handleAllData} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="degree"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className={`text-md ${poppins.className} font-semibold`}>Degree</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Degree name" {...field} value={formData.degree} onChange={handleAllData} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="cgpa"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className={`text-md ${poppins.className} font-semibold`}>CGPA(out of 10)</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="cgpa" {...field} value={formData.cgpa} onChange={handleAllData} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                        <div className="grid grid-cols-1 gap-y-5 mt-10">
-                            <FormField
-                                control={form.control}
-                                name="startYear"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className={`text-md ${poppins.className} font-semibold`}>Start year</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Startig year of your degree" {...field} value={formData.startYear} onChange={handleAllData} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="endYear"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className={`text-md ${poppins.className} font-semibold `}>End year</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Ending year of your degree" {...field} value={formData.endYear} onChange={handleAllData} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-
-                            />
-                        </div>
-                    </div>
-                    {/* certificates */}
-                    <div className="min-h-screen">
-                        <div className="m-10 ml-0">
-                            <p className="flex text-3xl font-medium" ><Image src={'/certificate.png'} alt="info" height={40} width={40} className="mr-2" />Certificates</p>
-                        </div>
-                        <div className="w-full md:flex">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 w-full">
-                                <FormField
-                                    control={form.control}
-                                    name="certificates"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className={`text-md ${poppins.className} font-semibold`}>Certificate Name</FormLabel>
-                                            <FormControl >
-                                                <Input placeholder="Enter certificate name" {...field} className="w-[90%]"
-                                                    id="certInput" value={certName} onChange={(e) => {
-                                                        setCertName(e.target.value)
-                                                        handleAllData(e)
-                                                    }}
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name="file"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className={`text-md ${poppins.className} font-semibold`}>Upload pdf</FormLabel>
-                                            <FormControl>
-                                                <Input placeholder="Enter your name" type="file" accept="application/pdf" {...field} className="w-[90%]"
-                                                    id="pdfs" onChange={(e) => {
-                                                        const file = e.target.files?.[0]
-                                                        setPdf(file || null)
-                                                        handleAllData(e)
-                                                    }}
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
-                            <Button type="button" onClick={handleAddFile} className="justify-end mt-8  md:ml-0">Add</Button>
-                        </div>
-                        <hr className="text-gray-400 m-10" />
-                        <div className="">
-                            {certArr.map((certs, index) => (
-                                <div key={index} className="flex">
-                                    <div className="text-lg m-3 font-medium ">
-                                        <li>{certs}</li>
-                                    </div>
-                                    {
-                                        pdfArr[index] && (
-                                            <div className="text-lg m-3 font-medium flex">
-                                                <Link
-                                                    href={URL.createObjectURL(pdfArr[index])}
-                                                    target="_blank"
-                                                    className="flex"
-                                                >
-                                                    <Image src={"/link.png"} height={30} width={30} alt="link" className="mr-1" />
-                                                    View pdf
-                                                </Link>
-                                            </div>
-                                        )
-                                    }
-                                </div>
-                            ))}
-
-                        </div>
-                    </div>
-                    <Button type='submit'>Submit</Button>
-                </form>
-            </Form >
+            <ToastContainer />
         </>
     )
 }

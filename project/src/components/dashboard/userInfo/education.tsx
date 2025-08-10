@@ -2,250 +2,152 @@
 
 import Image from "next/image"
 import { poppins } from "../../ui/fonts"
-import { useForm } from 'react-hook-form';
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useEffect } from "react";
+import { useState } from "react"
+import { toast, ToastContainer } from "react-toastify";
+import { LockKeyholeOpen, LockKeyhole } from 'lucide-react'
 
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from '../../ui/form';
-import { Input } from "../../ui/input";
-
-
-const formSchema = z.object({
-    school10 : z.string().min(1,{
-        message: "This field cannot be empty"
-    }),
-    board10 : z.string().min(1, {
-        message: "This field cannot be empty"
-    }),
-    percentage10 : z.number().min(1, {
-        message: "Enter valid percentage value"
-    }).max(100, {
-        message: "Enter valid percentage value"
-    }),
-    school12 : z.string().min(1,{
-        message: "This field cannot be empty"
-    }),
-    board12 : z.string().min(1, {
-        message: "This field cannot be empty"
-    }),
-    percentage12 : z.number().min(1, {
-        message: "Enter valid percentage value"
-    }).max(100, {
-        message: "Enter valid percentage value"
-    }),
-    college : z.string().min(1, {
-        message: "This field cannot be empty"
-    }),
-    degree : z.string().min(1, {
-        message: "This field cannot be empty"
-    }),
-    cgpa : z.number().min(1, {
-        message: "Enter valid cgpa value"
-    }).max(10, {
-        message: "Enter valid cgpa value"
-    }),
-    starty : z.number().min(2000, {
-        message: "This field cannot be empty"
-    }).max(2030, {
-        message: "This field cannot be empty"
-    }),
-    endy : z.number().min(2000, {
-        message: "This field cannot be empty"
-    }).max(2030, {
-        message: "This field cannot be empty"
+export default function Education({ onDataChange }: { onDataChange: (data: any) => void }) {
+    const [education, setEducation] = useState({
+        school10: "",
+        board10: "",
+        percentage10: "",
+        school12: "",
+        board12: "",
+        percentage12: "",
+        college: "",
+        degree: "",
+        cgpa: "",
+        startYear: "",
+        endYear: "",
     })
-});
-
-export default function Education({onDataChange} : {onDataChange : (data : any) => void}){    
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            school10 : '',
-            board10 : '',
-            percentage10 : undefined,
-            school12 : '',
-            board12 : '',
-            percentage12 : undefined,
-            college : '',
-            degree : '',
-            cgpa : undefined,
-            starty : undefined,
-            endy : undefined,
+    const [lock, setLock] = useState(false)
+    const submitHandler = () => {
+        if (
+            education.school10 === '' || education.board10 === '' || education.percentage10 === '' || education.school12 === '' ||
+            education.board12 === '' || education.percentage12 === '' || education.college === '' || education.degree === '' ||
+            education.cgpa === '' || education.startYear === '' || education.endYear === ''
+        ) {
+            toast('empty field')
+        } else {
+            setLock(true)
+            onDataChange(education)
+            // console.log("in child: ", education)
+            toast("Data Saved")
         }
-        });
-        const onSubmit = (data: any) => {
-            console.log("submitted data: ", data);
-        };
-       
-    return(
+    }
+    return (
         <>
-        <div>
-            <div className="m-10">
-                <p className="flex text-3xl font-medium" ><Image src={'/education.png'} alt="info" height={40} width={40} className="mr-2"/>Education</p>
-            </div>
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10 ml-10">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-y-10 gap-x-0">
-                        <FormField
-                            control={form.control}
-                            name="school10"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className={`text-md ${poppins.className} font-semibold`}>School</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="School name(10th)" {...field}/>
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="board10"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className={`text-md ${poppins.className} font-semibold`}>Board</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Enter board(10th)" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="percentage10"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className={`text-md ${poppins.className} font-semibold `}>Percentage(out of 100)</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="10th %age" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="school12"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className={`text-md ${poppins.className} font-semibold`}>School</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="School name(12th)" {...field}/>
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="board12"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className={`text-md ${poppins.className} font-semibold`}>Board</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Enter board(12th)" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="percentage12"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className={`text-md ${poppins.className} font-semibold `}>Percentage(out of 100)</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="12th %age" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="college"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className={`text-md ${poppins.className} font-semibold`}>College</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="College name" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="degree"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className={`text-md ${poppins.className} font-semibold`}>Degree</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Degree name" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="cgpa"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className={`text-md ${poppins.className} font-semibold`}>CGPA(out of 10)</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="cgpa" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+            <div>
+                <div className="m-10 ml-0 md:ml-10 flex">
+                    <div >
+                        <p className="flex text-3xl font-medium" ><Image src={'/education.png'} alt="info" height={40} width={40} className="mr-2" />Education</p>
                     </div>
-                    <div className="grid grid-cols-1 gap-y-5">
-                    <FormField
-                            control={form.control}
-                            name="starty"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className={`text-md ${poppins.className} font-semibold`}>Start year</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Startig year of your degree" {...field}/>
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="endy"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className={`text-md ${poppins.className} font-semibold `}>End year</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Ending year of your degree" {...field}/>
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
+                    <div className="hidden ml-auto sm:flex hover:cursor-pointer p-1 border-1 border-gray-400 rounded-lg" onClick={submitHandler}>{lock ? <LockKeyhole size={32} color="#2645a1" /> : <LockKeyholeOpen size={32} color="#2645a1" />} <div className="m-2 font-bold">Lock</div></div>
+                </div>
+                <form className="space-y-10 md:ml-10">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-y-10 gap-x-0">
+                        <div>
+                            <div className={`text-md ${poppins.className} font-semibold`}>School</div>
+                            <input placeholder="School name(10th)" className="bg-white focus:outline-none p-1 rounded-lg w-[90%]"
+                                value={education.school10}
+                                onChange={(e) => { setEducation({ ...education, school10: e.target.value }) }}
+                            />
+                        </div>
 
-                        />
+
+                        <div>
+                            <div className={`text-md ${poppins.className} font-semibold`}>Board</div>
+                            <input placeholder="Enter board(10th)" className="bg-white focus:outline-none p-1 rounded-lg w-[90%]"
+                                value={education.board10}
+                                onChange={(e) => { setEducation({ ...education, board10: e.target.value }) }}
+                            />
+                        </div>
+
+
+                        <div>
+                            <div className={`text-md ${poppins.className} font-semibold `}>Percentage(out of 100)</div>
+                            <input placeholder="10th %age" className="bg-white focus:outline-none p-1 rounded-lg w-[90%]"
+                                value={education.percentage10}
+                                onChange={(e) => { setEducation({ ...education, percentage10: e.target.value }) }}
+                            />
+                        </div>
+
+
+                        <div>
+                            <div className={`text-md ${poppins.className} font-semibold`}>School</div>
+                            <input placeholder="School name(12th)" className="bg-white focus:outline-none p-1 rounded-lg w-[90%]"
+                                value={education.school12}
+                                onChange={(e) => { setEducation({ ...education, school12: e.target.value }) }}
+                            />
+                        </div>
+
+
+                        <div>
+                            <div className={`text-md ${poppins.className} font-semibold`}>Board</div>
+                            <input placeholder="Enter board(12th)" className="bg-white focus:outline-none p-1 rounded-lg w-[90%]"
+                                value={education.board12}
+                                onChange={(e) => { setEducation({ ...education, board12: e.target.value }) }}
+                            />
+                        </div>
+
+                        <div>
+                            <div className={`text-md ${poppins.className} font-semibold `}>Percentage(out of 100)</div>
+                            <input placeholder="12th %age" className="bg-white focus:outline-none p-1 rounded-lg w-[90%]"
+                                value={education.percentage12}
+                                onChange={(e) => { setEducation({ ...education, percentage12: e.target.value }) }}
+                            />
+                        </div>
+
+                        <div>
+                            <div className={`text-md ${poppins.className} font-semibold`}>College</div>
+                            <input placeholder="College name" className="bg-white focus:outline-none p-1 rounded-lg w-[90%]"
+                                value={education.college}
+                                onChange={(e) => { setEducation({ ...education, college: e.target.value }) }}
+                            />
+                        </div>
+
+                        <div>
+                            <label className={`text-md ${poppins.className} font-semibold`}>Degree</label>
+                            <input placeholder="Degree name" className="bg-white focus:outline-none p-1 rounded-lg w-[90%]"
+                                value={education.degree}
+                                onChange={(e) => { setEducation({ ...education, degree: e.target.value }) }} />
+                        </div>
+
+                        <div>
+                            <div className={`text-md ${poppins.className} font-semibold`}>CGPA(out of 10)</div>
+                            <input placeholder="cgpa" className="bg-white focus:outline-none p-1 rounded-lg w-[90%]"
+                                value={education.cgpa}
+                                onChange={(e) => { setEducation({ ...education, cgpa: e.target.value }) }}
+                            />
+                        </div>
+
+                    </div>
+
+
+                    <div className="grid grid-cols-1 gap-y-5">
+                        <div>
+                            <div className={`text-md ${poppins.className} font-semibold`}>Start year</div>
+                            <input placeholder="Startig year of your degree" className="bg-white focus:outline-none p-1 rounded-lg w-[90%]"
+                                value={education.startYear}
+                                onChange={(e) => { setEducation({ ...education, startYear: e.target.value }) }}
+                            />
+                        </div>
+
+                        <div>
+                            <div className={`text-md ${poppins.className} font-semibold `}>End year</div>
+                            <input placeholder="Ending year of your degree" className="bg-white focus:outline-none p-1 rounded-lg w-[90%]"
+                                value={education.endYear}
+                                onChange={(e) => { setEducation({ ...education, endYear: e.target.value }) }}
+                            />
+                        </div>
+
                     </div>
                     {/* <Button type="submit">Continue</Button> */}
                 </form>
-            </Form>
+            </div >
+            <div className="flex ml-auto sm:hidden mt-5 justify-center hover:cursor-pointer p-1 border-1 border-gray-400 rounded-lg" onClick={submitHandler}>{lock ? <LockKeyhole size={32} color="#2645a1" /> : <LockKeyholeOpen size={32} color="#2645a1" />} <div className="m-2 font-bold">Lock</div></div>
 
-        </div>
+            {/* <ToastContainer/> */}
         </>
     )
 }

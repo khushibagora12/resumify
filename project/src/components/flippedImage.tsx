@@ -11,11 +11,11 @@ export default function Flipped() {
     }, []);
     return (
         <>
-            <div className={`relative h-150 w-100 m-10 transition-transform duration-1000 ease-in-out [transform-style:preserve-3d] shadow-gray-500 shadow-2xl ${flipped ? '[transform:rotateY(180deg)]' : ''}`}>
+            <div className={`relative h-150 w-100 m-10 rounded-2xl transition-transform duration-1000 ease-in-out [transform-style:preserve-3d] shadow-gray-500 shadow-2xl ${flipped ? '[transform:rotateY(180deg)]' : ''}`}>
 
                 <div className="absolute w-full h-full backface-hidden ">
                     <Image
-                        src={'/resume.jpg'}
+                        src={'/resume.png'}
                         alt="resume"
                         fill
                         className="object-cover rounded-lg"

@@ -1,3 +1,5 @@
+'use client'
+import { useRouter } from "next/navigation"
 import { poppins } from "@/components/ui/fonts"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
@@ -10,9 +12,14 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import Templates from "./templates"
+import Templates from "./templatescard"
 
 export default function UserResume() {
+    const router = useRouter();
+    const handleClick = () => {
+        console.log("redirecting");
+        router.push('resume/resume-preview');
+    }
     return (
         <>
             <div className="grid grid-cols-2">
@@ -22,7 +29,7 @@ export default function UserResume() {
 
                 </div>
                 <div className="flex justify-end m-auto">
-                    <Button className="bg-[#123458] text-white text-lg h-[70px]">Create my resume</Button>
+                    <Button className="bg-[#aebecf] font-bold text-lg h-[70px] hover:ring-4 hover:ring-white  hover:shadow-xl active:bg-[#8d9cad]" onClick={handleClick}>Create my resume</Button>
                 </div>
             </div>
             <div className="lg:w-[50%]">

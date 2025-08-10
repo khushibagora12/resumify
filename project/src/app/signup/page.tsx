@@ -1,7 +1,10 @@
-export default function Page(){
-    return(
+import SignupPage from "@/components/signupPage/signupPage";
+
+export default function Signup() {
+    return (
         <>
-    <h1 className="text-5xl">Sign up</h1>
-    </>
-    );
+            <SignupPage />
+        </>
+    )
 }
+

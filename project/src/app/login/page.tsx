@@ -1,7 +1,10 @@
-export default function Page(){
-    return(
+import SigninPage from "@/components/signinPage/signinPage";
+
+export default function Signup() {
+    return (
         <>
-    <h1 className="text-5xl">Login page</h1>
-    </>
-    );
+            <SigninPage />
+        </>
+    )
 }
+

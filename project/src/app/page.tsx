@@ -3,7 +3,6 @@ import Features from "@/components/features";
 import Body from "@/components/landinBody";
 import Navbar from "@/components/navbar";
 import ContactUs from "@/components/contact"
-
 export default function Home() {
   
   return (

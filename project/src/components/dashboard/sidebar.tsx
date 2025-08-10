@@ -1,6 +1,6 @@
 'use client'
-import { Home, Settings,FileUser,HandCoins,File,Briefcase,LogOut } from "lucide-react"
- 
+import { Home, Settings,FileUser,HandCoins,File,Briefcase,LogOut,UserCheck,MessageSquareText } from "lucide-react"
+ import Image from "next/image"
 import {
   Sidebar as UISidebar,
   SidebarContent,
@@ -12,6 +12,8 @@ import {
   SidebarMenuItem,
   SidebarFooter,
 } from "@/components/ui/sidebar"
+import { signOut } from "next-auth/react"
+import { limelight } from "../ui/fonts"
 
 
 const items = [
@@ -19,6 +21,10 @@ const items = [
     title: "Dashboard",
     url: "/dashboard",
     icon: Home,
+  },  {
+    title: "My Information",
+    url: "/dashboard/myInformation",
+    icon: UserCheck,
   },
   {
     title: "Portfolio",
@@ -37,14 +43,15 @@ const items = [
   },
   {
     title: "Donate",
-    url: "/dashboard/donate",
+    href: "https://www.buymeacoffee.com/sahildale",
     icon: HandCoins,
   },
   {
-    title: "Settings",
-    url: "/dashboard/settings",
-    icon: Settings,
+    title: "Feedback",
+    url: "/dashboard/feedback",
+    icon: MessageSquareText,
   },
+
 ]
 export default function AppSidebar() {
   //const pathname = usePathname()
@@ -68,15 +75,22 @@ export default function AppSidebar() {
     //   </nav>
     // </aside>
     <UISidebar >
-    <SidebarContent className="bg-[#123458] font--poppins font-semibold text-white" >
+    <SidebarContent className="bg-[#525860] font--poppins font-semibold text-white" >
+          
       <SidebarGroup>
-        <SidebarGroupLabel>Application</SidebarGroupLabel>
-        <SidebarGroupContent >
+        <SidebarGroupLabel>
+          <div className="flex-shrink-0 mt-5">
+                      <div className="flex gap-4">
+                      <h1 className={` text-4xl ${limelight.className} font-bold text-white pt-3 `}> <span className="text-5xl underline">R</span>esumify</h1>
+                      </div>
+                  </div>
+        </SidebarGroupLabel>
+        <SidebarGroupContent  className="mt-10">
           <SidebarMenu >
             {items.map((item) => (
               <SidebarMenuItem key={item.title} >
-                <SidebarMenuButton asChild className="hover:bg-[#355C7C] text-white" >
-                  <a href={item.url}>
+                <SidebarMenuButton asChild className="hover:bg-[#69707a] text-white" >
+                  <a href={item.url || item.href}>
                     <item.icon />
                     <span>{item.title}</span>
                   </a>
@@ -88,11 +102,11 @@ export default function AppSidebar() {
       </SidebarGroup>
     
     </SidebarContent>
-    <SidebarFooter className="bg-[#123458]" >
+    <SidebarFooter className="bg-[#525860]" >
       {/* logout button */}
       <SidebarMenuItem  >
-        <SidebarMenuButton asChild className="hover:bg-[#355C7C] text-white">
-          <a href="/logout">
+        <SidebarMenuButton asChild className="hover:bg-[#69707a] text-white" onClick={() => {signOut({callbackUrl : '/login'})}} >
+          <a >
             <LogOut />
             <span>Logout</span>
           </a>

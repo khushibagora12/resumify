@@ -1,5 +1,5 @@
 import AppSidebar from "@/components/dashboard/sidebar";
-import { SidebarProvider } from "@/components/ui/sidebar"
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 
 
 export default function Layout({
@@ -11,7 +11,8 @@ export default function Layout({
     return (
         <SidebarProvider>
             <AppSidebar />
-            <main className="w-full bg-[#F1EFEC]">
+            <main className="w-full bg-[#E6F0F4]">
+                {<SidebarTrigger className=" md:hidden"/>}
                 {children}
             </main>
         </SidebarProvider>
