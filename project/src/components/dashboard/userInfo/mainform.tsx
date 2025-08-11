@@ -14,6 +14,16 @@ import Languages from "./language";
 import Image from "next/image";
 import { poppins } from "@/components/ui/fonts";
 
+interface Exp {
+        position: string,
+        company: string,
+        startMonthExp: string,
+        startYearExp: number,
+        endMonthExp: string,
+        endYearExp: number,
+        description: string,
+    }
+
 export default function AllData() {
     const [info, setInfo] = useState<{
         fullName: string,
@@ -59,13 +69,13 @@ export default function AllData() {
         endYear: "",});
     const [certificates, setCertificates] = useState({});
     const [hobbies, setHobbies] = useState({});
-    const [experience, setExperience] = useState({});
+    const [experience, setExperience] = useState<Exp[]>([]);
     const [languages, setLanguages] = useState({});
     const [socials, setSocials] = useState({});
     const [projects, setProjects] = useState({});
     const [id, setId] = useState("");
     const [guide, setGuide] = useState(false);
-
+    console.log(experience)
     useEffect(() => {
         const getUserInfo = async () => {
             const res = await fetch('/api/authentication/signup', {

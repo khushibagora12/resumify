@@ -7,10 +7,10 @@ import { toast } from "react-toastify";
 interface Exp {
         position: string,
         company: string,
-        startMonth: string,
-        startYear: number,
-        endMonth: string,
-        endYear: number,
+        startMonthExp: string,
+        startYearExp: number,
+        endMonthExp: string,
+        endYearExp: number,
         description: string,
     }
 
@@ -18,18 +18,18 @@ export default function Experience({ onDataChange }: { onDataChange: (data: any)
     const [exp, setExp] = useState<Exp>({
         position: "",
         company: "",
-        startMonth: "",
-        startYear: 2025,
-        endMonth: "",
-        endYear: 2025,
+        startMonthExp: "",
+        startYearExp: 2025,
+        endMonthExp: "",
+        endYearExp: 2025,
         description: "",
     })
     const [experience, setExperience] = useState<Exp[]>([])
     const [lock, setLock] = useState(false)
 
     const submitHandler = () => {
-        if (exp.company === '' || exp.company === '' || exp.position === '' || exp.startMonth === '' ||
-            exp.startYear === undefined || exp.endMonth === '' || exp.endYear === undefined || exp.description === '') {
+        if (exp.company === '' || exp.company === '' || exp.position === '' || exp.startMonthExp === '' ||
+            exp.startYearExp === undefined || exp.endMonthExp === '' || exp.endYearExp === undefined || exp.description === '') {
             toast("empty field")
         } else {
             setLock(true)
@@ -40,8 +40,8 @@ export default function Experience({ onDataChange }: { onDataChange: (data: any)
     }
     const addHandler = (e: React.FormEvent) => {
         e.preventDefault()
-        if (exp.company === '' || exp.company === '' || exp.position === '' || exp.startMonth === '' ||
-            exp.startYear === undefined || exp.endMonth === '' || exp.endYear === undefined || exp.description === '') {
+        if (exp.company === '' || exp.company === '' || exp.position === '' || exp.startMonthExp === '' ||
+            exp.startYearExp === undefined || exp.endMonthExp === '' || exp.endYearExp === undefined || exp.description === '') {
             toast("empty field")
             return
         } 
@@ -79,9 +79,9 @@ export default function Experience({ onDataChange }: { onDataChange: (data: any)
                         <div>
                             <div className={`text-md ${poppins.className} font-semibold`}>Start Month</div>
                             <select className="w-[80%] bg-white p-1 rounded-xl focus:outline-3 focus:outline-white focus:ring-3 focus:ring-gray-600 border-1 border-gray-300"
-                                value={exp.startMonth}
+                                value={exp.startMonthExp}
                                 onChange={(e) => {
-                                    setExp({ ...exp, startMonth: e.target.value })
+                                    setExp({ ...exp, startMonthExp: e.target.value })
                                 }}>
                                 <option>Select Month</option>
                                 <option value="Jan">Jan</option>
@@ -101,17 +101,17 @@ export default function Experience({ onDataChange }: { onDataChange: (data: any)
                         <div>
                             <div className={`text-md ${poppins.className} font-semibold`}>Start Year</div>
                             <input type="number" min="1900" max="2025" placeholder="2025" className="w-[80%] bg-white p-1 rounded-xl focus:outline-3 focus:outline-white focus:ring-3 focus:ring-gray-600 border-1 border-gray-300"
-                                value={exp.startYear}
+                                value={exp.startYearExp}
                                 onChange={(e) => {
-                                    setExp({ ...exp, startYear: e.target.valueAsNumber })
+                                    setExp({ ...exp, startYearExp: e.target.valueAsNumber })
                                 }} />
                         </div>
                         <div>
                             <div className={`text-md ${poppins.className} font-semibold`}>End Month</div>
                             <select className="w-[80%] bg-white p-1 rounded-xl focus:outline-3 focus:outline-white focus:ring-3 focus:ring-gray-600 border-1 border-gray-300"
-                                value={exp.endMonth}
+                                value={exp.endMonthExp}
                                 onChange={(e) => {
-                                    setExp({ ...exp, endMonth: e.target.value })
+                                    setExp({ ...exp, endMonthExp: e.target.value })
                                 }}>
                                 <option>Select Month</option>
                                 <option value="Jan">Jan</option>
@@ -132,9 +132,9 @@ export default function Experience({ onDataChange }: { onDataChange: (data: any)
                         <div>
                             <div className={`text-md ${poppins.className} font-semibold`}>End Year</div>
                             <input type="number" min="1900" max="2025" placeholder="2025" className="w-[80%] bg-white p-1 rounded-xl focus:outline-3 focus:outline-white focus:ring-3 focus:ring-gray-600 border-1 border-gray-300"
-                                value={exp.endYear}
+                                value={exp.endYearExp}
                                 onChange={(e) => {
-                                    setExp({ ...exp, endYear: e.target.valueAsNumber })
+                                    setExp({ ...exp, endYearExp: e.target.valueAsNumber })
                                 }} />
                         </div>
                     </div>
@@ -155,7 +155,7 @@ export default function Experience({ onDataChange }: { onDataChange: (data: any)
                     experience.map((ex, index) => (
                         <div key={index}>
                             <div className="font-bold">{ex.position}</div>
-                            <div>{ex.company} | {ex.startMonth}/{ex.startYear}-{ex.endMonth}/{ex.endYear}</div>
+                            <div>{ex.company} | {ex.startMonthExp}/{ex.startYearExp}-{ex.endMonthExp}/{ex.endYearExp}</div>
                         </div>
                     ))
                 }

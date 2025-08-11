@@ -14,13 +14,17 @@ interface AllData {
     nontechnicalSkills: [String],
     hobbies: [String],
     projects: [{ name: String, repo: String }],
-    position: String,
-    company: String,
-    startMonthExp: String,
-    startYearExp: String,
-    endMonthExp: String,
-    endYearExp: String,
-    description: String,
+    experience: [
+        {
+            position: String,
+            company: String,
+            startMonthExp: String,
+            startYearExp: String,
+            endMonthExp: String,
+            endYearExp: String,
+            description: String,
+        }
+    ],
     school10: String,
     board10: String,
     percentage10: String,
@@ -38,6 +42,19 @@ interface AllData {
 interface Cert {
     certName: string,
     file: string
+}
+interface Exp {
+    position: string,
+    company: string,
+    startMonthExp: string,
+    startYearExp: string,
+    endMonthExp: string,
+    endYearExp: string,
+    description: string,
+}
+interface Soc {
+    platform: string,
+    link: string
 }
 export default function MyInfoPage() {
     const [allData, setAllData] = useState<AllData>();
@@ -60,7 +77,7 @@ export default function MyInfoPage() {
     //socials--------------------------------------------
     const [platform, setPlatform] = useState('')
     const [link, setLink] = useState('')
-    const [socials, setSocials] = useState<object[]>([])
+    const [socials, setSocials] = useState<Soc[]>([])
     //skills----------------------------------------------
     const [Tskills, setTSkills] = useState<string[]>([]);
     const [Tinput, setTInput] = useState('');
@@ -74,23 +91,16 @@ export default function MyInfoPage() {
     const [username, setUsername] = useState({ username: '' })
     const [projects, setProjects] = useState<object[]>([])
     //experience-----------------------------------------------------------------------
-    const [exp, setExp] = useState<{
-        position: string,
-        company: string,
-        startMonth: string,
-        startYear: number,
-        endMonth: string,
-        endYear: number,
-        description: string,
-    }>({
+    const [exp, setExp] = useState<Exp>({
         position: "",
         company: "",
-        startMonth: "",
-        startYear: 2025,
-        endMonth: "",
-        endYear: 2025,
+        startMonthExp: "",
+        startYearExp: "",
+        endMonthExp: "",
+        endYearExp: "",
         description: "",
     })
+    const [experience, setExperience] = useState<Exp[]>([])
     //education-------------------------------------------------------------------------
     const [education, setEducation] = useState<{
         school10: string,
@@ -209,7 +219,7 @@ export default function MyInfoPage() {
             <div className="m-10">
                 {
                     <div>
-{/* basic Info section======================================================================================================================= */}
+                        {/* basic Info section======================================================================================================================= */}
                         <div className="m-5 mb-20">
                             <h1 className="text-xl font-medium mb-5">Basic Info</h1>
                             <div className="grid grid-cols-2 gap-y-3">
@@ -320,7 +330,7 @@ export default function MyInfoPage() {
                             </div>
 
                         </div>
-{/* socials section========================================================================================================================= */}
+                        {/* socials section========================================================================================================================= */}
                         <div className="m-5 mb-20">
                             <h1 className="text-xl font-medium mb-5">Socials</h1>
                             <div className={`bg-white w-[72%] p-2 rounded-xl border-2 border-gray-300 ${edit != 6 ? '' : 'hidden'}`}>
@@ -365,7 +375,7 @@ export default function MyInfoPage() {
                             </div>
 
                         </div>
-{/* skill section ========================================================================================================================== */}
+                        {/* skill section ========================================================================================================================== */}
                         <div className="m-5 mb-20">
                             <h1 className="text-xl font-medium mb-5">Skills</h1>
                             <div className="grid grid-cols-2">
@@ -445,7 +455,7 @@ export default function MyInfoPage() {
                                 </div>
                             </div>
                         </div>
-{/* hobbies section ======================================================================================================================== */}
+                        {/* hobbies section ======================================================================================================================== */}
                         <div className="m-5 mb-20">
                             <h1 className="text-xl font-medium mb-5">Hobbies</h1>
                             <div className={`bg-white w-[72%] p-2 rounded-xl border-2 border-gray-300 ${edit != 9 ? '' : 'hidden'}`}>
@@ -484,18 +494,18 @@ export default function MyInfoPage() {
                             </div>
                         </div>
 
-{/* projects section ====================================================================================================================== */}
+                        {/* projects section ====================================================================================================================== */}
                         <div className="m-5 mb-20">
                             <h1 className="text-xl font-medium mb-5">Projects</h1>
                             <div className={`bg-white w-[72%] p-2 rounded-xl border-2 border-gray-300 ${edit != 10 ? '' : 'hidden'}`}>
                                 <SquarePen className="m-1 ml-auto" size={18} onClick={() => { setEdit(10) }} />
                                 {allData?.projects.map((project, index) => (
-                                    <div key={index} className="flex gap-x-2"><li>{project.name}</li><div><a target="_blank" className="text-blue-600" href={project.repo}>visit</a></div></div>
+                                    <div key={index} className="flex gap-x-2"><li>{project.name}</li><div><a target="_blank" className="text-blue-600" href={`${project.repo}`}>visit</a></div></div>
                                 ))}
                             </div>
                             <div className={`bg-white p-1 rounded-xl w-[72%] border-2 border-gray-300 ${edit == 10 ? '' : 'hidden'}`}>
                                 <SquareCheckBig className="m-1 ml-auto" size={18} onClick={() => {
-                                    
+
                                     console.log("projects: ", projects)
                                     if (Object.keys(allProjects).length !== 0) {
                                         editHandler('projects', projects)
@@ -523,154 +533,123 @@ export default function MyInfoPage() {
                                 </div>
                             </div>
                         </div>
-{/* experience section ===================================================================================================================== */}
+                        {/* experience section ===================================================================================================================== */}
                         <div className="m-5 mb-20">
                             <h1 className="text-xl font-medium mb-5">Experience</h1>
-                            <div className="grid grid-cols-2 gap-y-5">
-                                <div>
-                                    Position:
-                                    <div className={`flex bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit != 11 ? 'flex' : 'hidden'}`}>
-                                        {allData?.position}<SquarePen className="m-1 ml-auto" size={18} onClick={() => { setEdit(11) }} />
+                            <div className="p-10 border rounded-2xl">
+                                <SquarePen className={`m-1 ml-auto ${edit != 11 ? 'flex' : 'hidden'}`} size={18} onClick={() => { setEdit(11) }} />
+                                <SquareCheckBig className={`m-1 ml-auto ${edit == 11 ? 'flex' : 'hidden'}`} size={18} onClick={() => {
+                                    if (experience.length != 0) {
+                                        editHandler('experience', experience)
+                                    }
+                                    setEdit(0)
+                                    setExperience([])
+
+                                }} />
+                                <div className={`${edit != 11 ? 'flex' : 'hidden'} grid sm:grid-cols-2 gap-5`}>
+                                    {
+                                        allData?.experience.map((ex, index) => (
+                                            <div key={index}>
+                                                <div className="font-bold">{ex.position}</div>
+                                                <div>{ex.company} | {ex.startMonthExp}/{ex.startYearExp}-{ex.endMonthExp}/{ex.endYearExp}</div>
+                                                <div>{ex.description}</div>
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                                <div className={`grid sm:grid-cols-2 gap-y-5 ${edit == 11 ? 'flex' : 'hidden'}`}>
+                                    <div>
+                                        <div className={`bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit == 11 ? 'flex' : 'hidden'}`}>
+                                            <input type="text" placeholder="Position" className="focus:outline-none"
+                                                value={exp.position}
+                                                onChange={(e) => { setExp({ ...exp, position: e.target.value }) }}
+                                            />
+                                        </div>
                                     </div>
-                                    <div className={`bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit == 11 ? 'flex' : 'hidden'}`}>
-                                        <input type="text" placeholder="Position" className="focus:outline-none"
-                                            value={exp.position}
-                                            onChange={(e) => { setExp({ ...exp, position: e.target.value }) }}
+                                    <div>
+                                        <div className={`bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit == 11 ? 'flex' : 'hidden'}`}>
+                                            <input type="text" placeholder="Company" className="focus:outline-none"
+                                                value={exp.company}
+                                                onChange={(e) => { setExp({ ...exp, company: e.target.value }) }}
+                                            />
+
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className={`bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit == 11 ? 'flex' : 'hidden'}`}>
+                                            <input type="text" placeholder="Start Month" className="focus:outline-none"
+                                                value={exp.startMonthExp}
+                                                onChange={(e) => { setExp({ ...exp, startMonthExp: e.target.value }) }}
+                                            />
+
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className={`bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit == 11 ? 'flex' : 'hidden'}`}>
+                                            <input type="text" placeholder="Start Year" className="focus:outline-none"
+                                                value={exp.startYearExp}
+                                                onChange={(e) => { setExp({ ...exp, startYearExp: e.target.value }) }}
+                                            />
+
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className={`bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit == 11 ? 'flex' : 'hidden'}`}>
+                                            <input type="text" placeholder="End Month" className="focus:outline-none"
+                                                value={exp.endMonthExp}
+                                                onChange={(e) => { setExp({ ...exp, endMonthExp: e.target.value }) }}
+                                            />
+
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className={`bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit == 11 ? 'flex' : 'hidden'}`}>
+                                            <input type="text" placeholder="End Year" className="focus:outline-none"
+                                                value={exp.endYearExp}
+                                                onChange={(e) => { setExp({ ...exp, endYearExp: e.target.value }) }}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="mt-5">
+                                    <div className={`bg-white p-1 rounded-xl w-[72%] border-2 border-gray-300 ${edit == 11 ? 'flex' : 'hidden'}`}>
+                                        <input type="text" placeholder="Description" className="focus:outline-none"
+                                            value={exp.description}
+                                            onChange={(e) => { setExp({ ...exp, description: e.target.value }) }}
                                         />
-                                        <SquareCheckBig className="m-1 ml-auto" size={18} onClick={() => {
-                                            if (exp.position !== '') {
-                                                editHandler('position', exp.position)
-                                            }
-                                            setEdit(0)
-                                            setExp({ ...exp, position: '' })
 
-                                        }} />
                                     </div>
                                 </div>
-                                <div>
-                                    Company:
-                                    <div className={`flex bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit != 12 ? 'flex' : 'hidden'}`}>
-                                        {allData?.company}<SquarePen className="m-1 ml-auto" size={18} onClick={() => { setEdit(12) }} />
-                                    </div>
-                                    <div className={`bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit == 12 ? 'flex' : 'hidden'}`}>
-                                        <input type="text" placeholder="Company" className="focus:outline-none"
-                                            value={exp.company}
-                                            onChange={(e) => { setExp({ ...exp, company: e.target.value }) }}
-                                        />
-                                        <SquareCheckBig className="m-1 ml-auto" size={18} onClick={() => {
-                                            if (exp.company !== '') {
-                                                editHandler('company', exp.company)
-                                            }
-                                            setEdit(0)
-                                            setExp({ ...exp, company: '' })
-
-                                        }} />
-                                    </div>
-                                </div>
-                                <div>
-                                    Start Month:
-                                    <div className={`flex bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit != 13 ? 'flex' : 'hidden'}`}>
-                                        {allData?.startMonthExp}<SquarePen className="m-1 ml-auto" size={18} onClick={() => { setEdit(13) }} />
-                                    </div>
-
-                                    <div className={`bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit == 13 ? 'flex' : 'hidden'}`}>
-                                        <input type="text" placeholder="Start Month" className="focus:outline-none"
-                                            value={exp.startMonth}
-                                            onChange={(e) => { setExp({ ...exp, startMonth: e.target.value }) }}
-                                        />
-                                        <SquareCheckBig className="m-1 ml-auto" size={18} onClick={() => {
-                                            if (exp.startMonth !== '') {
-                                                editHandler('startMonthExp', exp.startMonth)
-                                            }
-                                            setEdit(0)
-                                            setExp({ ...exp, startMonth: '' })
-
-                                        }} />
-                                    </div>
-                                </div>
-                                <div>
-                                    Start Year:
-                                    <div className={`flex bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit != 14 ? 'flex' : 'hidden'}`}>
-                                        {allData?.startYearExp}<SquarePen className="m-1 ml-auto" size={18} onClick={() => { setEdit(14) }} />
-                                    </div>
-                                    <div className={`bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit == 14 ? 'flex' : 'hidden'}`}>
-                                        <input type="text" placeholder="Start Year" className="focus:outline-none"
-                                            value={exp.startYear}
-                                            onChange={(e) => { setExp({ ...exp, startYear: e.target.valueAsNumber }) }}
-                                        />
-                                        <SquareCheckBig className="m-1 ml-auto" size={18} onClick={() => {
-                                            if (exp.startYear !== 0) {
-                                                editHandler('startYearExp', exp.startYear)
-                                            }
-                                            setEdit(0)
-                                            setExp({ ...exp, startYear: 0 })
-
-                                        }} />
-                                    </div>
-                                </div>
-                                <div>
-                                    End Month:
-                                    <div className={`flex bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit != 15 ? 'flex' : 'hidden'}`}>
-                                        {allData?.endMonthExp}<SquarePen className="m-1 ml-auto" size={18} onClick={() => { setEdit(15) }} />
-                                    </div>
-                                    <div className={`bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit == 15 ? 'flex' : 'hidden'}`}>
-                                        <input type="text" placeholder="End Month" className="focus:outline-none"
-                                            value={exp.endMonth}
-                                            onChange={(e) => { setExp({ ...exp, endMonth: e.target.value }) }}
-                                        />
-                                        <SquareCheckBig className="m-1 ml-auto" size={18} onClick={() => {
-                                            if (exp.endMonth !== '') {
-                                                editHandler('endMonthExp', exp.endMonth)
-                                            }
-                                            setEdit(0)
-                                            setExp({ ...exp, endMonth: '' })
-
-                                        }} />
-                                    </div>
-                                </div>
-                                <div>
-                                    End year:
-                                    <div className="flex bg-white p-1 rounded-xl w-60 border-2 border-gray-300">
-                                        {allData?.endYearExp}<SquarePen className="m-1 ml-auto" size={18} onClick={() => { setEdit(16) }} />
-                                    </div>
-                                    <div className={`bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit == 16 ? 'flex' : 'hidden'}`}>
-                                        <input type="text" placeholder="End Year" className="focus:outline-none"
-                                            value={exp.endMonth}
-                                            onChange={(e) => { setExp({ ...exp, endYear: e.target.valueAsNumber }) }}
-                                        />
-                                        <SquareCheckBig className="m-1 ml-auto" size={18} onClick={() => {
-                                            if (exp.endYear !== 0) {
-                                                editHandler('endYearExp', exp.endYear)
-                                            }
-                                            setEdit(0)
-                                            setExp({ ...exp, endYear: 0 })
-
-                                        }} />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="mt-5">
-                                Description:
-                                <div className={`flex bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit != 17 ? 'flex' : 'hidden'}`}>
-                                    {allData?.description}<SquarePen className="m-1 ml-auto" size={18} onClick={() => { setEdit(18) }} />
-                                </div>
-                                <div className={`bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit == 18 ? 'flex' : 'hidden'}`}>
-                                    <input type="text" placeholder="Description" className="focus:outline-none"
-                                        value={exp.description}
-                                        onChange={(e) => { setExp({ ...exp, description: e.target.value }) }}
-                                    />
-                                    <SquareCheckBig className="m-1 ml-auto" size={18} onClick={() => {
-                                        if (exp.description !== '') {
-                                            editHandler('description', exp.description)
+                                <button className={`flex justify-center font-medium mt-5 border border-gray-300 p-1 rounded-xl bg-gray-400 active:bg-gray-600 w-[72%] text-black ${edit == 11 ? 'flex' : 'hidden'}`}
+                                    onClick={() => {
+                                        if (exp.company != '' || exp.position != '' || exp.startMonthExp != '' || exp.startYearExp != '' ||
+                                            exp.endMonthExp != '' || exp.endYearExp != '' || exp.description != '') {
+                                            setExperience([...experience, exp])
+                                            setExp({
+                                                position: "",
+                                                company: "",
+                                                startMonthExp: "",
+                                                startYearExp: "",
+                                                endMonthExp: "",
+                                                endYearExp: "",
+                                                description: "",
+                                            })
                                         }
-                                        setEdit(0)
-                                        setExp({ ...exp, description: '' })
-
-                                    }} />
+                                    }}>Add</button>
+                                <div>
+                                    {
+                                        experience.map((ex, index) => (
+                                            <div key={index} className="m-3">
+                                                <div className="font-bold">{ex.position}</div>
+                                                <div>{ex.company} | {ex.startMonthExp}/{ex.startYearExp}-{ex.endMonthExp}/{ex.endYearExp}</div>
+                                                <div>{ex.description}</div>
+                                            </div>
+                                        ))
+                                    }
                                 </div>
                             </div>
                         </div>
-{/* education section ================================================================================================================================ */}
+                        {/* education section ================================================================================================================================ */}
                         <div className="m-5 mb-20">
                             <h1 className="text-xl font-medium mb-5">Education</h1>
                             <div className="grid grid-cols-1 gap-y-5">
@@ -903,13 +882,13 @@ export default function MyInfoPage() {
                                 </div>
                             </div>
                         </div>
-{/* certificate section ============================================================================================================ */}
+                        {/* certificate section ============================================================================================================ */}
                         <div className="m-5 mb-20">
                             <h1 className="text-xl font-medium mb-5">Certificates</h1>
                             <div className={`bg-white w-[72%] p-2 rounded-xl border-2 border-gray-300 ${edit != 29 ? '' : 'hidden'}`}>
                                 <SquarePen className="m-1 ml-auto" size={18} onClick={() => { setEdit(29) }} />
                                 {allData?.certificates.map((cert, index) => (
-                                    <div key={index} className="flex gap-x-2"><li>{cert.certName}</li><div><a href={cert.file} target="_blank" className="text-blue-600">click</a></div></div>
+                                    <div key={index} className="flex gap-x-2"><li>{cert.certName}</li><div><a href={`${cert.file}`} target="_blank" className="text-blue-600">click</a></div></div>
                                 ))}
                             </div>
                             <div className={`bg-white p-1 rounded-xl w-[72%] border-2 border-gray-300 ${edit == 29 ? '' : 'hidden'}`}>
@@ -945,7 +924,7 @@ export default function MyInfoPage() {
                                 </div>
                             </div>
                         </div>
-{/* languages section ============================================================================================================== */}
+                        {/* languages section ============================================================================================================== */}
                         <div className="m-5 mb-20">
                             <h1 className="text-xl font-medium mb-5">Languages</h1>
                             <div className={`bg-white w-[72%] p-2 rounded-xl border-2 border-gray-300 ${edit != 30 ? '' : 'hidden'}`}>
