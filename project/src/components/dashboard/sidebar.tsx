@@ -1,6 +1,5 @@
 'use client'
-import { Home, Settings,FileUser,HandCoins,File,Briefcase,LogOut,UserCheck,MessageSquareText } from "lucide-react"
- import Image from "next/image"
+import { Home,FileUser,File,Briefcase,LogOut,UserCheck,MessageSquareText } from "lucide-react"
 import {
   Sidebar as UISidebar,
   SidebarContent,
@@ -42,11 +41,6 @@ const items = [
     icon: File,
   },
   {
-    title: "Donate",
-    href: "https://www.buymeacoffee.com/sahildale",
-    icon: HandCoins,
-  },
-  {
     title: "Feedback",
     url: "/dashboard/feedback",
     icon: MessageSquareText,
@@ -54,26 +48,8 @@ const items = [
 
 ]
 export default function AppSidebar() {
-  //const pathname = usePathname()
 
   return (
-    // <aside className="w-64 bg-[#112240] text-white min-h-screen py-6 px-4">
-    //   <h1 className="text-2xl font-bold mb-8">SHIELD</h1>
-    //   <nav className="space-y-4">
-    //     {navItems.map(({ label, href }) => (
-    //       <Link
-    //         key={href}
-    //         href={href}
-    //         className={cn(
-    //           'block px-4 py-2 rounded hover:bg-[#0f1c2e]',
-    //           pathname === href && 'bg-[#0f1c2e] font-semibold'
-    //         )}
-    //       >
-    //         {label}
-    //       </Link>
-    //     ))}
-    //   </nav>
-    // </aside>
     <UISidebar >
     <SidebarContent className="bg-[#525860] font--poppins font-semibold text-white" >
           
@@ -90,7 +66,7 @@ export default function AppSidebar() {
             {items.map((item) => (
               <SidebarMenuItem key={item.title} >
                 <SidebarMenuButton asChild className="hover:bg-[#69707a] text-white" >
-                  <a href={item.url || item.href}>
+                  <a href={item.url}>
                     <item.icon />
                     <span>{item.title}</span>
                   </a>

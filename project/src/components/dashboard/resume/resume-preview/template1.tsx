@@ -1,6 +1,27 @@
 import { playfair, poppins } from "@/components/ui/fonts"
 import { Link } from 'lucide-react';
 
+interface Projects {
+    name: string,
+    html_url: string
+}
+interface Social {
+    platform: string,
+    link: string
+}
+interface Cert {
+    certName: string,
+    url: string
+}
+interface Exp {
+    position: string,
+    company: string,
+    startMonthExp: string,
+    startYearExp: number,
+    endMonthExp: string,
+    endYearExp: number,
+    description: string,
+}
 export default function ResumeTemplate1(props: any) {
     const allData = props.data;
     return (
@@ -11,7 +32,7 @@ export default function ResumeTemplate1(props: any) {
                         {/* header */}
                         <div className="bg-gray-300 grid grid-cols-2 items-center">
                             <div className={`${playfair.className} ml-5 p-5`}>
-                                <p className="text-2xl sm:text-4xl font-bold w-40 sm:w-50">{allData ? allData.fullName : "John Doe"}</p>
+                                <p className="text-2xl sm:text-4xl font-bold w-40 sm:w-70">{allData ? allData.fullName : "John Doe"}</p>
                                 <p className="text-sm sm:text-lg">{allData ? allData.profession : "Software Engineer"}</p>
                             </div>
                         </div>
@@ -27,10 +48,10 @@ export default function ResumeTemplate1(props: any) {
                                 <h3 className={`${poppins.className} text-sm md:text-lg font-bold`}>PROJECTS: </h3>
                                 <div className="text-xs sm:text-sm">
                                     {
-                                        allData ? allData.projects?.map((pr, index) => (
+                                        allData ? allData.projects?.map((pr: Projects, index: number) => (
                                             <div key={index} className="flex">
                                                 <li>{pr["name"]}</li>
-                                                <div className="font-medium underline"><a href={pr['html_url']} target="_blank" className="text-blue-600"><Link size={12} className="m-1"/></a></div>
+                                                <div className="font-medium underline"><a href={pr['html_url']} target="_blank" className="text-blue-600"><Link size={12} className="m-1" /></a></div>
                                             </div>
                                         ))
                                             : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga rerum ducimus, ab perferendis excepturi repudiandae eligendi aspernatur illo necessitatibus architecto similique et laborum, blanditiis vitae odit facere maxime recusandae dolor."
@@ -42,11 +63,13 @@ export default function ResumeTemplate1(props: any) {
                                 <h3 className={`${poppins.className}  text-sm sm:text-lg font-bold`}>EXPERIENCE: </h3>
                                 <div className="text-xs md:text-sm">
                                     {
-                                        <div>
-                                            <h3 className="font-semibold">{allData.position}</h3>
-                                            <p>{allData.company} | {allData.startMonthExp} {allData.startYearExp}-{allData.endMonthExp} {allData.endYearExp}</p>
-                                            <li>{allData.description}</li>
-                                        </div>
+                                        allData.experience?.map((ex: Exp, index: number) => (
+                                            <div key={index}>
+                                                <div className="font-semibold">{ex.position}</div>
+                                                <div>{ex.company} | {ex.startMonthExp}/{ex.startYearExp}-{ex.endMonthExp}/{ex.endYearExp}</div>
+                                                <li>{ex.description}</li>
+                                            </div>
+                                        ))
                                     }
                                 </div>
                             </div>
@@ -125,10 +148,10 @@ export default function ResumeTemplate1(props: any) {
                                 <h3 className={`${poppins.className} text-sm md:text-lg font-bold`}>SOCIALS: </h3>
                                 {
                                     allData ?
-                                        allData.socials?.map((soc, index: number) => (
+                                        allData.socials?.map((soc: Social, index: number) => (
                                             <div key={index} className="text-xs sm:text-md flex" >
                                                 <li>{soc.platform}</li>
-                                                <a href={soc.link} className="underline text-blue-500"><Link size={12} className="m-1"/></a>
+                                                <a href={soc.link} className="underline text-blue-500"><Link size={12} className="m-1" /></a>
                                             </div>
                                         ))
                                         :
@@ -143,9 +166,9 @@ export default function ResumeTemplate1(props: any) {
                                 <h3 className={`${poppins.className} text-sm sm:text-lg font-bold`}>HOBBIES: </h3>
                                 {allData ?
                                     allData.hobbies?.map((hobby: string, index: number) =>
-                                        (
-                                            <li className="text-xs sm:text-md" key={index}>{hobby}</li>
-                                        ))
+                                    (
+                                        <li className="text-xs sm:text-md" key={index}>{hobby}</li>
+                                    ))
                                     :
                                     <div className="text-xs md:text-md">
                                         <li>hooby 1</li>
@@ -156,17 +179,17 @@ export default function ResumeTemplate1(props: any) {
                             <div className="p-5 text-white">
                                 <h3 className={`${poppins.className} text-sm sm:text-lg font-bold`}>CERTIFICATES: </h3>
                                 {
-                                    allData?
-                                        allData.certificates?.map((cert, index: number) => (
+                                    allData ?
+                                        allData.certificates?.map((cert: Cert, index: number) => (
                                             <div key={index} className="text-xs sm:text-md">
-                                                <li className="flex">{cert["certName"]}<a className="text-blue-500 underline" target="_blank" href={cert["url"]}><Link size={12} className="m-1"/></a></li>
+                                                <li className="flex">{cert["certName"]}<a className="text-blue-500 underline" target="_blank" href={cert["url"]}><Link size={12} className="m-1" /></a></li>
                                             </div>
                                         ))
-                                    :
-                                    <div className="text-xs sm:text-md">
-                                        <li>cert1 : link</li>
-                                        <li>cert 2 : link</li>
-                                    </div>
+                                        :
+                                        <div className="text-xs sm:text-md">
+                                            <li>cert1 : link</li>
+                                            <li>cert 2 : link</li>
+                                        </div>
                                 }
                             </div>
                         </div>

@@ -5,14 +5,14 @@ import { LockKeyholeOpen, LockKeyhole } from 'lucide-react'
 import { toast } from "react-toastify";
 
 interface Exp {
-        position: string,
-        company: string,
-        startMonthExp: string,
-        startYearExp: number,
-        endMonthExp: string,
-        endYearExp: number,
-        description: string,
-    }
+    position: string,
+    company: string,
+    startMonthExp: string,
+    startYearExp: number,
+    endMonthExp: string,
+    endYearExp: number,
+    description: string,
+}
 
 export default function Experience({ onDataChange }: { onDataChange: (data: any) => void }) {
     const [exp, setExp] = useState<Exp>({
@@ -44,7 +44,7 @@ export default function Experience({ onDataChange }: { onDataChange: (data: any)
             exp.startYearExp === undefined || exp.endMonthExp === '' || exp.endYearExp === undefined || exp.description === '') {
             toast("empty field")
             return
-        } 
+        }
         setExperience([...experience, exp])
     }
     return (

@@ -12,7 +12,7 @@ export default function Layout({
         <SidebarProvider>
             <AppSidebar />
             <main className="w-full bg-[#E6F0F4]">
-                {<SidebarTrigger className=" md:hidden"/>}
+                {<SidebarTrigger className=""/>}
                 {children}
             </main>
         </SidebarProvider>

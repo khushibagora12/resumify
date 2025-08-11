@@ -152,7 +152,6 @@ export default function MyInfoPage() {
         }
     }
     useEffect(() => { getInfo() }, [])
-    console.log(allData?.startMonthExp)
 
     //function to update values in database if user edits any fiels============================================================================
     const editHandler = async (key: any, val: any) => {
@@ -222,7 +221,7 @@ export default function MyInfoPage() {
                         {/* basic Info section======================================================================================================================= */}
                         <div className="m-5 mb-20">
                             <h1 className="text-xl font-medium mb-5">Basic Info</h1>
-                            <div className="grid grid-cols-2 gap-y-3">
+                            <div className="grid sm:grid-cols-2 gap-y-3">
                                 <div>
                                     Name:
                                     <div className={`flex bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit != 1 ? 'flex' : 'hidden'}`}>
@@ -309,11 +308,11 @@ export default function MyInfoPage() {
                             </div>
                             <div className="mt-3">
                                 About:
-                                <div className={`flex bg-white p-1 rounded-xl w-[72%] h-30 border-2 border-gray-300 ${edit != 5 ? 'flex' : 'hidden'}`}>
+                                <div className={`flex bg-white p-1 rounded-xl sm:w-[72%] h-30 border-2 border-gray-300 ${edit != 5 ? 'flex' : 'hidden'}`}>
                                     {allData?.about}
                                     <SquarePen className="m-1 ml-auto" size={18} onClick={() => { setEdit(5) }} />
                                 </div>
-                                <div className={`bg-white p-1 rounded-xl w-[72%] h-30 border-2 border-gray-300 ${edit == 5 ? 'flex' : 'hidden'}`}>
+                                <div className={`bg-white p-1 rounded-xl sm:w-[72%] h-30 border-2 border-gray-300 ${edit == 5 ? 'flex' : 'hidden'}`}>
                                     <textarea placeholder="About yourself" className="focus:outline-none w-[80%]"
                                         value={info.about}
                                         onChange={(e) => { setInfo({ ...info, about: e.target.value }) }}
@@ -333,13 +332,13 @@ export default function MyInfoPage() {
                         {/* socials section========================================================================================================================= */}
                         <div className="m-5 mb-20">
                             <h1 className="text-xl font-medium mb-5">Socials</h1>
-                            <div className={`bg-white w-[72%] p-2 rounded-xl border-2 border-gray-300 ${edit != 6 ? '' : 'hidden'}`}>
+                            <div className={`bg-white sm:w-[72%] p-2 rounded-xl border-2 border-gray-300 ${edit != 6 ? '' : 'hidden'}`}>
                                 <SquarePen className="m-1 ml-auto" size={18} onClick={() => { setEdit(6) }} />
                                 {allData?.socials.map((social, index) => (
                                     <div key={index} className="flex gap-x-2"><li>{social.platform}</li><div><a target="_blank" className="text-blue-600" href={social.link}>visit</a></div></div>
                                 ))}
                             </div>
-                            <div className={`bg-white p-1 rounded-xl w-[72%] border-2 border-gray-300 ${edit == 6 ? '' : 'hidden'}`}>
+                            <div className={`bg-white p-1 rounded-xl sm:w-[72%] border-2 border-gray-300 ${edit == 6 ? '' : 'hidden'}`}>
                                 <SquareCheckBig className="m-1 ml-auto" size={18} onClick={() => {
                                     if (Object.keys(socials).length !== 0) {
                                         editHandler('socials', socials)
@@ -378,16 +377,16 @@ export default function MyInfoPage() {
                         {/* skill section ========================================================================================================================== */}
                         <div className="m-5 mb-20">
                             <h1 className="text-xl font-medium mb-5">Skills</h1>
-                            <div className="grid grid-cols-2">
+                            <div className="grid sm:grid-cols-2">
                                 <div>
                                     <h2 className="font-bold">Techinical: </h2>
-                                    <div className={`bg-white w-[72%] p-2 rounded-xl border-2 border-gray-300 ${edit != 7 ? '' : 'hidden'}`}>
+                                    <div className={`bg-white sm:w-[72%] p-2 rounded-xl border-2 border-gray-300 ${edit != 7 ? '' : 'hidden'}`}>
                                         <SquarePen className="m-1 ml-auto" size={18} onClick={() => { setEdit(7) }} />
                                         {allData?.technicalSkills.map((Tskill, index) => (
                                             <li key={index}>{Tskill}</li>
                                         ))}
                                     </div>
-                                    <div className={`bg-white p-1 rounded-xl w-[72%] border-2 border-gray-300 ${edit == 7 ? '' : 'hidden'}`}>
+                                    <div className={`bg-white p-1 rounded-xl sm:w-[72%] border-2 border-gray-300 ${edit == 7 ? '' : 'hidden'}`}>
                                         <SquareCheckBig className="m-1 ml-auto" size={18} onClick={() => {
                                             if (Tskills.length !== 0) {
                                                 editHandler('technicalSkills', Tskills)
@@ -417,14 +416,14 @@ export default function MyInfoPage() {
                                     </div>
                                 </div>
                                 <div>
-                                    <h2 className="font-bold">Non Techinical: </h2>
-                                    <div className={`bg-white w-[72%] p-2 rounded-xl border-2 border-gray-300 ${edit != 8 ? '' : 'hidden'}`}>
+                                    <h2 className="font-bold mt-5 sm:mt-0">Non Techinical: </h2>
+                                    <div className={`bg-white sm:w-[72%] p-2 rounded-xl border-2 border-gray-300 ${edit != 8 ? '' : 'hidden'}`}>
                                         <SquarePen className="m-1 ml-auto" size={18} onClick={() => { setEdit(8) }} />
                                         {allData?.nontechnicalSkills.map((skill, index) => (
                                             <li key={index}>{skill}</li>
                                         ))}
                                     </div>
-                                    <div className={`bg-white p-1 rounded-xl w-[72%] border-2 border-gray-300 ${edit == 8 ? '' : 'hidden'}`}>
+                                    <div className={`bg-white p-1 rounded-xl sm:w-[72%] border-2 border-gray-300 ${edit == 8 ? '' : 'hidden'}`}>
                                         <SquareCheckBig className="m-1 ml-auto" size={18} onClick={() => {
                                             if (skills.length !== 0) {
                                                 editHandler('nontechnicalSkills', skills)
@@ -458,13 +457,13 @@ export default function MyInfoPage() {
                         {/* hobbies section ======================================================================================================================== */}
                         <div className="m-5 mb-20">
                             <h1 className="text-xl font-medium mb-5">Hobbies</h1>
-                            <div className={`bg-white w-[72%] p-2 rounded-xl border-2 border-gray-300 ${edit != 9 ? '' : 'hidden'}`}>
+                            <div className={`bg-white sm:w-[72%] p-2 rounded-xl border-2 border-gray-300 ${edit != 9 ? '' : 'hidden'}`}>
                                 <SquarePen className="m-1 ml-auto" size={18} onClick={() => { setEdit(9) }} />
                                 {allData?.hobbies.map((hobby, index) => (
                                     <li key={index}>{hobby}</li>
                                 ))}
                             </div>
-                            <div className={`bg-white p-1 rounded-xl w-[72%] border-2 border-gray-300 ${edit == 9 ? '' : 'hidden'}`}>
+                            <div className={`bg-white p-1 rounded-xl sm:w-[72%] border-2 border-gray-300 ${edit == 9 ? '' : 'hidden'}`}>
                                 <SquareCheckBig className="m-1 ml-auto" size={18} onClick={() => {
                                     if (hobbyArr.length !== 0) {
                                         editHandler('hobbies', hobbyArr)
@@ -497,13 +496,13 @@ export default function MyInfoPage() {
                         {/* projects section ====================================================================================================================== */}
                         <div className="m-5 mb-20">
                             <h1 className="text-xl font-medium mb-5">Projects</h1>
-                            <div className={`bg-white w-[72%] p-2 rounded-xl border-2 border-gray-300 ${edit != 10 ? '' : 'hidden'}`}>
+                            <div className={`bg-white sm:w-[72%] p-2 rounded-xl border-2 border-gray-300 ${edit != 10 ? '' : 'hidden'}`}>
                                 <SquarePen className="m-1 ml-auto" size={18} onClick={() => { setEdit(10) }} />
                                 {allData?.projects.map((project, index) => (
                                     <div key={index} className="flex gap-x-2"><li>{project.name}</li><div><a target="_blank" className="text-blue-600" href={`${project.repo}`}>visit</a></div></div>
                                 ))}
                             </div>
-                            <div className={`bg-white p-1 rounded-xl w-[72%] border-2 border-gray-300 ${edit == 10 ? '' : 'hidden'}`}>
+                            <div className={`bg-white p-1 rounded-xl sm:w-[72%] border-2 border-gray-300 ${edit == 10 ? '' : 'hidden'}`}>
                                 <SquareCheckBig className="m-1 ml-auto" size={18} onClick={() => {
 
                                     console.log("projects: ", projects)
@@ -536,7 +535,7 @@ export default function MyInfoPage() {
                         {/* experience section ===================================================================================================================== */}
                         <div className="m-5 mb-20">
                             <h1 className="text-xl font-medium mb-5">Experience</h1>
-                            <div className="p-10 border rounded-2xl">
+                            <div className="p-10 border rounded-2xl sm:w-[72%]">
                                 <SquarePen className={`m-1 ml-auto ${edit != 11 ? 'flex' : 'hidden'}`} size={18} onClick={() => { setEdit(11) }} />
                                 <SquareCheckBig className={`m-1 ml-auto ${edit == 11 ? 'flex' : 'hidden'}`} size={18} onClick={() => {
                                     if (experience.length != 0) {
@@ -653,7 +652,7 @@ export default function MyInfoPage() {
                         <div className="m-5 mb-20">
                             <h1 className="text-xl font-medium mb-5">Education</h1>
                             <div className="grid grid-cols-1 gap-y-5">
-                                <div className="grid grid-cols-3">
+                                <div className="grid md:grid-cols-3">
                                     <div>
                                         School(10th):
                                         <div className={`flex bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit != 18 ? 'flex' : 'hidden'}`}>
@@ -715,7 +714,7 @@ export default function MyInfoPage() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="grid grid-cols-3">
+                                <div className="grid md:grid-cols-3">
                                     <div>
                                         School(12th):
                                         <div className={`flex bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit != 21 ? 'flex' : 'hidden'}`}>
@@ -777,7 +776,7 @@ export default function MyInfoPage() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="grid grid-cols-3">
+                                <div className="grid md:grid-cols-3">
                                     <div>
                                         College:
                                         <div className={`flex bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit != 24 ? 'flex' : 'hidden'}`}>
@@ -842,10 +841,10 @@ export default function MyInfoPage() {
 
                                 <div>
                                     Start Year:
-                                    <div className={`flex bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit != 27 ? 'flex' : 'hidden'}`}>
+                                    <div className={`flex bg-white p-1 rounded-xl sm:w-[72%] border-2 border-gray-300 ${edit != 27 ? 'flex' : 'hidden'}`}>
                                         {allData?.startYear}<SquarePen className="m-1 ml-auto" size={18} onClick={() => { setEdit(27) }} />
                                     </div>
-                                    <div className={`bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit == 27 ? 'flex' : 'hidden'}`}>
+                                    <div className={`bg-white p-1 rounded-xl sm:w-[72%]  border-2 border-gray-300 ${edit == 27 ? 'flex' : 'hidden'}`}>
                                         <input type="text" placeholder="Start Year" className="focus:outline-none"
                                             value={education.startYear}
                                             onChange={(e) => { setEducation({ ...education, startYear: e.target.value }) }}
@@ -862,10 +861,10 @@ export default function MyInfoPage() {
                                 </div>
                                 <div>
                                     End Year:
-                                    <div className={`flex bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit != 28 ? 'flex' : 'hidden'}`}>
+                                    <div className={`flex bg-white p-1 rounded-xl sm:w-[72%] border-2 border-gray-300 ${edit != 28 ? 'flex' : 'hidden'}`}>
                                         {allData?.endYear}<SquarePen className="m-1 ml-auto" size={18} onClick={() => { setEdit(28) }} />
                                     </div>
-                                    <div className={`bg-white p-1 rounded-xl w-60 border-2 border-gray-300 ${edit == 28 ? 'flex' : 'hidden'}`}>
+                                    <div className={`bg-white p-1 rounded-xl sm:w-[72%] border-2 border-gray-300 ${edit == 28 ? 'flex' : 'hidden'}`}>
                                         <input type="text" placeholder="School(10th)" className="focus:outline-none"
                                             value={education.endYear}
                                             onChange={(e) => { setEducation({ ...education, endYear: e.target.value }) }}
@@ -885,13 +884,13 @@ export default function MyInfoPage() {
                         {/* certificate section ============================================================================================================ */}
                         <div className="m-5 mb-20">
                             <h1 className="text-xl font-medium mb-5">Certificates</h1>
-                            <div className={`bg-white w-[72%] p-2 rounded-xl border-2 border-gray-300 ${edit != 29 ? '' : 'hidden'}`}>
+                            <div className={`bg-white sm:w-[72%] p-2 rounded-xl border-2 border-gray-300 ${edit != 29 ? '' : 'hidden'}`}>
                                 <SquarePen className="m-1 ml-auto" size={18} onClick={() => { setEdit(29) }} />
                                 {allData?.certificates.map((cert, index) => (
                                     <div key={index} className="flex gap-x-2"><li>{cert.certName}</li><div><a href={`${cert.file}`} target="_blank" className="text-blue-600">click</a></div></div>
                                 ))}
                             </div>
-                            <div className={`bg-white p-1 rounded-xl w-[72%] border-2 border-gray-300 ${edit == 29 ? '' : 'hidden'}`}>
+                            <div className={`bg-white p-1 rounded-xl sm:w-[72%] border-2 border-gray-300 ${edit == 29 ? '' : 'hidden'}`}>
                                 <SquareCheckBig className="m-1 ml-auto" size={18} onClick={() => {
                                     if (Object.keys(fullcertificates).length !== 0) {
                                         editHandler('certificates', fullcertificates)
@@ -927,13 +926,13 @@ export default function MyInfoPage() {
                         {/* languages section ============================================================================================================== */}
                         <div className="m-5 mb-20">
                             <h1 className="text-xl font-medium mb-5">Languages</h1>
-                            <div className={`bg-white w-[72%] p-2 rounded-xl border-2 border-gray-300 ${edit != 30 ? '' : 'hidden'}`}>
+                            <div className={`bg-white sm:w-[72%] p-2 rounded-xl border-2 border-gray-300 ${edit != 30 ? '' : 'hidden'}`}>
                                 <SquarePen className="m-1 ml-auto" size={18} onClick={() => { setEdit(30) }} />
                                 {allData?.languages.map((lang, index) => (
                                     <li key={index}>{lang}</li>
                                 ))}
                             </div>
-                            <div className={`bg-white p-1 rounded-xl w-[72%] border-2 border-gray-300 ${edit == 30 ? '' : 'hidden'}`}>
+                            <div className={`bg-white p-1 rounded-xl sm:w-[72%] border-2 border-gray-300 ${edit == 30 ? '' : 'hidden'}`}>
                                 <SquareCheckBig className="m-1 ml-auto" size={18} onClick={() => {
                                     if (langArr.length !== 0) {
                                         editHandler('languages', langArr)
