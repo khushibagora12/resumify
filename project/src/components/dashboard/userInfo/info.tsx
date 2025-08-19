@@ -3,7 +3,7 @@
 import { poppins } from "../../ui/fonts"
 import Image from "next/image"
 import { useEffect, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { LockKeyholeOpen, LockKeyhole } from 'lucide-react'
 interface Info{
     fullName: string,

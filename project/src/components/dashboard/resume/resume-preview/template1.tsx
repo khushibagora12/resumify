@@ -37,27 +37,27 @@ interface AllData {
     certificates: [{ certName: string, file: string }],
     languages: [string]
 }
-interface Projects {
-    name: string,
-    html_url: string
-}
+// interface Projects {
+//     name: string,
+//     html_url: string
+// }
 interface Social {
     platform: string,
     link: string
 }
-interface Cert {
-    certName: string,
-    url: string
-}
-interface Exp {
-    position: string,
-    company: string,
-    startMonthExp: string,
-    startYearExp: number,
-    endMonthExp: string,
-    endYearExp: number,
-    description: string,
-}
+// interface Cert {
+//     certName: string,
+//     url: string
+// }
+// interface Exp {
+//     position: string,
+//     company: string,
+//     startMonthExp: string,
+//     startYearExp: number,
+//     endMonthExp: string,
+//     endYearExp: number,
+//     description: string,
+// }
 interface ResumeData {
     data: AllData
 }

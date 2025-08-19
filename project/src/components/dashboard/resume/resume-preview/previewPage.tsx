@@ -10,42 +10,42 @@ import { jsPDF } from 'jspdf';
 import { toPng } from 'html-to-image';
 import { toast, ToastContainer } from 'react-toastify';
 
-interface AllData {
-    fullName: string,
-    profession: string,
-    email: string,
-    contact: string,
-    about: string,
-    socials: [{ platform: string, link: string }],
-    technicalSkills: [string],
-    nontechnicalSkills: [string],
-    hobbies: [string],
-    projects: [{ name: string, repo: string }],
-    experience: [
-        {
-            position: string,
-            company: string,
-            startMonthExp: string,
-            startYearExp: string,
-            endMonthExp: string,
-            endYearExp: string,
-            description: string,
-        }
-    ],
-    school10: string,
-    board10: string,
-    percentage10: string,
-    school12: string,
-    board12: string,
-    percentage12: string,
-    college: string,
-    degree: string,
-    cgpa: string,
-    startYear: string,
-    endYear: string,
-    certificates: [{ certName: string, file: string }],
-    languages: [string]
-}
+// interface AllData {
+//     fullName: string,
+//     profession: string,
+//     email: string,
+//     contact: string,
+//     about: string,
+//     socials: [{ platform: string, link: string }],
+//     technicalSkills: [string],
+//     nontechnicalSkills: [string],
+//     hobbies: [string],
+//     projects: [{ name: string, repo: string }],
+//     experience: [
+//         {
+//             position: string,
+//             company: string,
+//             startMonthExp: string,
+//             startYearExp: string,
+//             endMonthExp: string,
+//             endYearExp: string,
+//             description: string,
+//         }
+//     ],
+//     school10: string,
+//     board10: string,
+//     percentage10: string,
+//     school12: string,
+//     board12: string,
+//     percentage12: string,
+//     college: string,
+//     degree: string,
+//     cgpa: string,
+//     startYear: string,
+//     endYear: string,
+//     certificates: [{ certName: string, file: string }],
+//     languages: [string]
+// }
 
 export default function PreviewPage() {
 

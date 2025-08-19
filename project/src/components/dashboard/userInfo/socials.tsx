@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { LockKeyholeOpen, LockKeyhole } from 'lucide-react'
 import Link from "next/link"
 import {toast} from 'react-toastify'
