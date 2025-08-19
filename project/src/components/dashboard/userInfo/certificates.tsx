@@ -3,15 +3,15 @@
 import { poppins } from "../../ui/fonts"
 import Image from "next/image"
 import { Button } from "../../ui/button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { LockKeyholeOpen, LockKeyhole } from 'lucide-react'
 interface Cert {
     certName : string,
     file : string
 }
-export default function Certificates({ onDataChange }: { onDataChange: (data: any) => void }) {
+export default function Certificates({ onDataChange }: { onDataChange: (data: Cert[]) => void }) {
     const [pdfArr, setPdfArr] = useState<File[]>([]);
     const [pdf, setPdf] = useState<File | null>(null);
     const [certificates, setCertificates] = useState<object[]>([])

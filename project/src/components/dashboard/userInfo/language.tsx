@@ -4,7 +4,7 @@ import { LockKeyholeOpen, LockKeyhole } from 'lucide-react'
 import { poppins } from "@/components/ui/fonts"
 import {toast} from 'react-toastify'
 
-export default function Languages({ onDataChange }: { onDataChange: (data: any) => void }) {
+export default function Languages({ onDataChange }: { onDataChange: (data: string[]) => void }) {
     const [language, setLanguage] = useState('')
     const [langArr, setLangArr] = useState<string[]>([])
     const [lock, setLock] = useState(false)

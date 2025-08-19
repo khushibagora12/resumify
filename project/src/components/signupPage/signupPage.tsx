@@ -30,7 +30,7 @@ export default function SignupPage() {
             toast(response.message);
             if (response.message === 'user signed up successfully') {
                 setData({ ...data, username: '', email: '', password: '' })
-                router.push('/signin');
+                router.push('/login');
             }
 
         } catch (error) {

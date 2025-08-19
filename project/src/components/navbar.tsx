@@ -1,4 +1,4 @@
-import { bebas, limelight } from "./ui/fonts"
+import {limelight } from "./ui/fonts"
 import Link from "next/link"
 export default function Navbar() {
     return (

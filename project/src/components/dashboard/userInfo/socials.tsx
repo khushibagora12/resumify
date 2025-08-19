@@ -3,15 +3,18 @@ import { useEffect, useState } from "react"
 import { LockKeyholeOpen, LockKeyhole } from 'lucide-react'
 import Link from "next/link"
 import {toast} from 'react-toastify'
-
-export default function Socials({onDataChange}: {onDataChange: (data: any) => void}) {
+interface Soc{
+    platform : string,
+    link : string
+}
+export default function Socials({onDataChange}: {onDataChange: (data: Soc[]) => void}) {
 
     const [lock, setLock] = useState(false)
     const [platform, setPlatform] = useState('')
     const [platformArr, setPlatformArr] = useState<string[]>([])
     const [link, setLink] = useState('')
     const [linkArr, setLinkArr] = useState<string[]>([])
-    const [socials, setSocials]  = useState<object[]>([])
+    const [socials, setSocials]  = useState<Soc[]>([])
 
     const addSocials = () => {
         if(platform !== '' && link !== ''){

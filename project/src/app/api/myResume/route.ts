@@ -21,8 +21,9 @@ export async function POST(req : Request){
         await user.save();
         return NextResponse.json({message : "pdf saved"});
     }
-    catch(e : any){
-        return NextResponse.json({error : e.message || "something went wrong"}, {status : 500});
+    catch(e : unknown){
+        console.log("error: ", e)
+        return NextResponse.json({error : "something went wrong"}, {status : 500});
     }
 }
 
@@ -39,6 +40,7 @@ export async function GET() {
         return NextResponse.json(userData);
     }
     catch(e : unknown){
+        console.log("error: ", e)
         return NextResponse.json({error : "something went wrong"}, {status : 500})
     }
 }

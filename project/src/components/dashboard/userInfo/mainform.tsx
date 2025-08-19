@@ -37,8 +37,8 @@ export default function AllData() {
         contact: "",
         about: ""});
     const [skills, setSkills] = useState<{
-        technicalSkills: [string],
-        nontechnicalSkills: [string]
+        technicalSkills: string[],
+        nontechnicalSkills: string[]
     }>({
         technicalSkills: [''],
         nontechnicalSkills: ['']
@@ -182,9 +182,9 @@ export default function AllData() {
                         <ol className="list-decimal m-10">
                             <li className="font-medium">Fill Out the Resume Form
                                 <ul className="list-disc font-normal text-gray-700">
-                                    <li>On the Dashboard, you'll find a form with 9 sections: <br />Basic Info, Socials, Skills, Hobbies, Projects, Experience, Education, Certificates, Languages</li>
+                                    <li>{"On the Dashboard, you'll find a form with 9 sections: <br />Basic Info, Socials, Skills, Hobbies, Projects, Experience, Education, Certificates, Languages"}</li>
                                     <li>Enter your details in each section.</li>
-                                    <li>After filling a section, make sure to lock it to save the information. <br />⚠️ If you don't lock a section, your data won't be saved. </li>
+                                    <li>{"After filling a section, make sure to lock it to save the information. <br />⚠️ If you don't lock a section, your data won't be saved."} </li>
                                     <li>After completing all sections, click the Submit button at the bottom of the form.</li>
                                 </ul>
                             </li>

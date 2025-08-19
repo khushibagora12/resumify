@@ -1,43 +1,43 @@
 'use client'
 import { useEffect, useState } from "react"
-import { SquarePen, SquareCheckBig, Target } from 'lucide-react';
+import { SquarePen, SquareCheckBig } from 'lucide-react';
 import { toast, ToastContainer } from "react-toastify";
 
 interface AllData {
     fullName: string,
-    profession: String,
-    email: String,
-    contact: String,
-    about: String,
+    profession: string,
+    email: string,
+    contact: string,
+    about: string,
     socials: [{ platform: string, link: string }],
-    technicalSkills: [String],
-    nontechnicalSkills: [String],
-    hobbies: [String],
-    projects: [{ name: String, repo: String }],
+    technicalSkills: [string],
+    nontechnicalSkills: [string],
+    hobbies: [string],
+    projects: [{ name: string, repo: string }],
     experience: [
         {
-            position: String,
-            company: String,
-            startMonthExp: String,
-            startYearExp: String,
-            endMonthExp: String,
-            endYearExp: String,
-            description: String,
+            position: string,
+            company: string,
+            startMonthExp: string,
+            startYearExp: string,
+            endMonthExp: string,
+            endYearExp: string,
+            description: string,
         }
     ],
-    school10: String,
-    board10: String,
-    percentage10: String,
-    school12: String,
-    board12: String,
-    percentage12: String,
-    college: String,
-    degree: String,
-    cgpa: String,
-    startYear: String,
-    endYear: String,
-    certificates: [{ certName: String, file: String }],
-    languages: [String]
+    school10: string,
+    board10: string,
+    percentage10: string,
+    school12: string,
+    board12: string,
+    percentage12: string,
+    college: string,
+    degree: string,
+    cgpa: string,
+    startYear: string,
+    endYear: string,
+    certificates: [{ certName: string, file: string }],
+    languages: [string]
 }
 interface Cert {
     certName: string,
@@ -154,7 +154,7 @@ export default function MyInfoPage() {
     useEffect(() => { getInfo() }, [])
 
     //function to update values in database if user edits any fiels============================================================================
-    const editHandler = async (key: any, val: any) => {
+    const editHandler = async (key: string, val: unknown) => {
         const data = {
             [key]: val
         }

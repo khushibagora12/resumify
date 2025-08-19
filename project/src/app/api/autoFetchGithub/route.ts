@@ -1,4 +1,3 @@
-import { Octokit } from "octokit";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -12,7 +11,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json(data)
     } 
     catch (error: unknown) {
-        console.log("error in fetching github repos")
+        console.log("error in fetching github repos: ", error)
         return NextResponse.json({ error: "something went wrong" })
     }
 }

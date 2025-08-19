@@ -64,7 +64,7 @@ export default function SigninPage() {
                                     </div>
                                 </form>
                             </div>
-                            <div className={`flex justify-center ${plexSerif.className} text-[#545454] text-sm`}>Don't have an account? <Link href={"/signup"} className={`font-bold`} >SignUp</Link></div>
+                            <div className={`flex justify-center ${plexSerif.className} text-[#545454] text-sm`}>{"Don't have an account?"} <Link href={"/signup"} className={`font-bold`} >SignUp</Link></div>
                         </div>
                     </div>
                 </div>

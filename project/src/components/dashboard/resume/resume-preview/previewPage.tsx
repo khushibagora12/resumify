@@ -10,10 +10,116 @@ import { jsPDF } from 'jspdf';
 import { toPng } from 'html-to-image';
 import { toast, ToastContainer } from 'react-toastify';
 
+interface AllData {
+    fullName: string,
+    profession: string,
+    email: string,
+    contact: string,
+    about: string,
+    socials: [{ platform: string, link: string }],
+    technicalSkills: [string],
+    nontechnicalSkills: [string],
+    hobbies: [string],
+    projects: [{ name: string, repo: string }],
+    experience: [
+        {
+            position: string,
+            company: string,
+            startMonthExp: string,
+            startYearExp: string,
+            endMonthExp: string,
+            endYearExp: string,
+            description: string,
+        }
+    ],
+    school10: string,
+    board10: string,
+    percentage10: string,
+    school12: string,
+    board12: string,
+    percentage12: string,
+    college: string,
+    degree: string,
+    cgpa: string,
+    startYear: string,
+    endYear: string,
+    certificates: [{ certName: string, file: string }],
+    languages: [string]
+}
 
 export default function PreviewPage() {
 
-    const [allData, setAllData] = useState([]);
+    const [allData, setAllData] = useState< {
+    fullName: string,
+    profession: string,
+    email: string,
+    contact: string,
+    about: string,
+    socials: [{ platform: string, link: string }],
+    technicalSkills: [string],
+    nontechnicalSkills: [string],
+    hobbies: [string],
+    projects: [{ name: string, repo: string }],
+    experience: [
+        {
+            position: string,
+            company: string,
+            startMonthExp: string,
+            startYearExp: string,
+            endMonthExp: string,
+            endYearExp: string,
+            description: string,
+        }
+    ],
+    school10: string,
+    board10: string,
+    percentage10: string,
+    school12: string,
+    board12: string,
+    percentage12: string,
+    college: string,
+    degree: string,
+    cgpa: string,
+    startYear: string,
+    endYear: string,
+    certificates: [{ certName: string, file: string }],
+    languages: [string]
+}>( {
+    fullName: "",
+    profession: "",
+    email: "",
+    contact: "",
+    about: "",
+    socials: [{ platform: "", link: "" }],
+    technicalSkills: [""],
+    nontechnicalSkills: [""],
+    hobbies: [""],
+    projects: [{ name: "", repo: "" }],
+    experience: [
+        {
+            position: "",
+            company: "",
+            startMonthExp: "",
+            startYearExp: "",
+            endMonthExp: "",
+            endYearExp: "",
+            description: "",
+        }
+    ],
+    school10: "",
+    board10: "",
+    percentage10: "",
+    school12: "",
+    board12: "",
+    percentage12: "",
+    college: "",
+    degree: "",
+    cgpa: "",
+    startYear: "",
+    endYear: "",
+    certificates: [{ certName: "", file: "" }],
+    languages: [""]
+});
 
     useEffect(() => {
         console.log("useeffect");
@@ -97,7 +203,7 @@ export default function PreviewPage() {
             <div className="grid lg:flex">
                 <div ref={saveRef}>
                     <div ref={contentRef} >
-                        <ResumeTemplate1 data={allData} />
+                        <ResumeTemplate1 data={allData!} />
                     </div>
                 </div>
                 <div className="bg-[#aebecf] w-[300px] h-[200px] m-10 rounded-2xl">

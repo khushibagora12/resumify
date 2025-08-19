@@ -13,7 +13,7 @@ export async function ConnectDB() {
             return;
         })
     }
-    catch (error: any) {
+    catch (error: unknown) {
         console.log(error);
     }
 }

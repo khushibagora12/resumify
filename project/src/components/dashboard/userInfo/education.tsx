@@ -3,10 +3,23 @@
 import Image from "next/image"
 import { poppins } from "../../ui/fonts"
 import { useState } from "react"
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { LockKeyholeOpen, LockKeyhole } from 'lucide-react'
 
-export default function Education({ onDataChange }: { onDataChange: (data: any) => void }) {
+interface Edu {
+    school10: string,
+    board10: string,
+    percentage10: string,
+    school12: string,
+    board12: string,
+    percentage12: string,
+    college: string,
+    degree: string,
+    cgpa: string,
+    startYear: string,
+    endYear: string,
+}
+export default function Education({ onDataChange }: { onDataChange: (data: Edu) => void }) {
     const [education, setEducation] = useState({
         school10: "",
         board10: "",

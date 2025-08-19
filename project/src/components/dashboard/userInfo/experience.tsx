@@ -14,7 +14,7 @@ interface Exp {
     description: string,
 }
 
-export default function Experience({ onDataChange }: { onDataChange: (data: any) => void }) {
+export default function Experience({ onDataChange }: { onDataChange: (data: Exp[]) => void }) {
     const [exp, setExp] = useState<Exp>({
         position: "",
         company: "",

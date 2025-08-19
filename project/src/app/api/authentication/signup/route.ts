@@ -49,8 +49,9 @@ export async function POST(req: NextRequest) {
         await user.save();
         return NextResponse.json({ message: "user signed up successfully" });
     }
-    catch (e: any) {
-        return NextResponse.json({ error: e.message || "something went kwrong" }, { status: 500 });
+    catch (e: unknown) {
+        console.log("error: ", e)
+        return NextResponse.json({ error: "something went kwrong" }, { status: 500 });
     }
 }
 export async function GET() {

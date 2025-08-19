@@ -31,9 +31,9 @@ export default function Feedback() {
             console.log("Success:", resData);
             toast(resData.message);
         }
-        catch(err : any) {
-            console.log("errorr!!");
-            toast.error("Failed to send feedback : ", err.message);
+        catch(err : unknown) {
+            console.log("errorr: ", err);
+            toast.error("Failed to send feedback : ");
         }
     }
     return (

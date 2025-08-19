@@ -5,11 +5,15 @@ import { LockKeyholeOpen, LockKeyhole } from 'lucide-react'
 import Link from "next/link"
 import { toast } from 'react-toastify'
 
-export default function Projects({ onDataChange }: { onDataChange: (data: any) => void }) {
+interface Pro{
+    name : string,
+    repo : string
+}
+export default function Projects({ onDataChange }: { onDataChange: (data: Pro[]) => void }) {
     const [allProjects, setAllProjects] = useState([])
     const [username, setUsername] = useState({ username: '' })
     const [lock, setLock] = useState(false)
-    const [projects, setProjects] = useState<object[]>([])
+    const [projects, setProjects] = useState<Pro[]>([])
     useEffect(() => {
         console.log("pro: ", projects)
         onDataChange(projects)

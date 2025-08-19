@@ -1,6 +1,42 @@
 import { playfair, poppins } from "@/components/ui/fonts"
 import { Link } from 'lucide-react';
 
+interface AllData {
+    fullName: string,
+    profession: string,
+    email: string,
+    contact: string,
+    about: string,
+    socials: [{ platform: string, link: string }],
+    technicalSkills: [string],
+    nontechnicalSkills: [string],
+    hobbies: [string],
+    projects: [{ name: string, repo: string }],
+    experience: [
+        {
+            position: string,
+            company: string,
+            startMonthExp: string,
+            startYearExp: string,
+            endMonthExp: string,
+            endYearExp: string,
+            description: string,
+        }
+    ],
+    school10: string,
+    board10: string,
+    percentage10: string,
+    school12: string,
+    board12: string,
+    percentage12: string,
+    college: string,
+    degree: string,
+    cgpa: string,
+    startYear: string,
+    endYear: string,
+    certificates: [{ certName: string, file: string }],
+    languages: [string]
+}
 interface Projects {
     name: string,
     html_url: string
@@ -22,8 +58,12 @@ interface Exp {
     endYearExp: number,
     description: string,
 }
-export default function ResumeTemplate1(props: any) {
-    const allData = props.data;
+interface ResumeData {
+    data: AllData
+}
+export default function ResumeTemplate1({data}: ResumeData) {
+    const allData = data;
+    console.log("allll", allData)
     return (
         <>
             <div className="m-10 max-w-[700px] h-auto">
@@ -48,10 +88,10 @@ export default function ResumeTemplate1(props: any) {
                                 <h3 className={`${poppins.className} text-sm md:text-lg font-bold`}>PROJECTS: </h3>
                                 <div className="text-xs sm:text-sm">
                                     {
-                                        allData ? allData.projects?.map((pr: Projects, index: number) => (
+                                        allData ? allData.projects?.map((pr , index: number) => (
                                             <div key={index} className="flex">
                                                 <li>{pr["name"]}</li>
-                                                <div className="font-medium underline"><a href={pr['html_url']} target="_blank" className="text-blue-600"><Link size={12} className="m-1" /></a></div>
+                                                <div className="font-medium underline"><a href={pr['repo']} target="_blank" className="text-blue-600"><Link size={12} className="m-1" /></a></div>
                                             </div>
                                         ))
                                             : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga rerum ducimus, ab perferendis excepturi repudiandae eligendi aspernatur illo necessitatibus architecto similique et laborum, blanditiis vitae odit facere maxime recusandae dolor."
@@ -62,15 +102,15 @@ export default function ResumeTemplate1(props: any) {
                             <div className="p-5">
                                 <h3 className={`${poppins.className}  text-sm sm:text-lg font-bold`}>EXPERIENCE: </h3>
                                 <div className="text-xs md:text-sm">
-                                    {
-                                        allData.experience?.map((ex: Exp, index: number) => (
+                                    {/* {
+                                        allData.experience?.map((ex, index: number) => (
                                             <div key={index}>
                                                 <div className="font-semibold">{ex.position}</div>
                                                 <div>{ex.company} | {ex.startMonthExp}/{ex.startYearExp}-{ex.endMonthExp}/{ex.endYearExp}</div>
                                                 <li>{ex.description}</li>
                                             </div>
                                         ))
-                                    }
+                                    } */}
                                 </div>
                             </div>
                             {/* education */}
@@ -151,7 +191,7 @@ export default function ResumeTemplate1(props: any) {
                                         allData.socials?.map((soc: Social, index: number) => (
                                             <div key={index} className="text-xs sm:text-md flex" >
                                                 <li>{soc.platform}</li>
-                                                <a href={soc.link} className="underline text-blue-500"><Link size={12} className="m-1" /></a>
+                                                <a href={soc.link} target="_blank" className="underline text-blue-500"><Link size={12} className="m-1" /></a>
                                             </div>
                                         ))
                                         :
@@ -180,9 +220,9 @@ export default function ResumeTemplate1(props: any) {
                                 <h3 className={`${poppins.className} text-sm sm:text-lg font-bold`}>CERTIFICATES: </h3>
                                 {
                                     allData ?
-                                        allData.certificates?.map((cert: Cert, index: number) => (
+                                        allData.certificates?.map((cert, index: number) => (
                                             <div key={index} className="text-xs sm:text-md">
-                                                <li className="flex">{cert["certName"]}<a className="text-blue-500 underline" target="_blank" href={cert["url"]}><Link size={12} className="m-1" /></a></li>
+                                                <li className="flex">{cert["certName"]}<a className="text-blue-500 underline" target="_blank" href={cert["file"]}><Link size={12} className="m-1" /></a></li>
                                             </div>
                                         ))
                                         :

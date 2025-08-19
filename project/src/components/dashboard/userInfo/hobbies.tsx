@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { toast } from 'react-toastify'
 import { poppins } from '@/components/ui/fonts'
 
-export default function Hobbies({ onDataChange }: { onDataChange: (data: any) => void }) {
+export default function Hobbies({ onDataChange }: { onDataChange: (data: string[]) => void }) {
     const [lock, setLock] = useState(false)
     const [hobby, setHobby] = useState('')
     const [hobbyArr, setHobbyArr] = useState<string[]>([])

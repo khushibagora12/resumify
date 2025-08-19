@@ -7,7 +7,11 @@ import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
 import { useState } from "react";
 import { toast } from "react-toastify";
-export default function Skills({ onDataChange }: { onDataChange: (data: any) => void }) {
+interface Ski{
+    technicalSkills: string[],
+    nontechnicalSkills: string[]
+}
+export default function Skills({ onDataChange }: { onDataChange: (data: Ski) => void }) {
     const [Tskills, setTSkills] = useState<string[]>([]);
     const [Tinput, setTInput] = useState('');
     const [skills, setSkills] = useState<string[]>([]);
@@ -19,7 +23,7 @@ export default function Skills({ onDataChange }: { onDataChange: (data: any) => 
             toast("empty field")
         } else {
             setLock(true)
-            const Allskills = {
+            const Allskills : Ski = {
                 technicalSkills: Tskills,
                 nontechnicalSkills: skills
             }

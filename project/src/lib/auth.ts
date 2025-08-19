@@ -33,8 +33,8 @@ export const authOptions: NextAuthOptions = {
                         email: user.email,
                     };
                 } 
-                catch (error) {
-                    console.log("error in authorize function")
+                catch (error: unknown) {
+                    console.log("error in authorize function, ", error)
                     return null;
                 }
             }

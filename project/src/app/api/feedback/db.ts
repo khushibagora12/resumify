@@ -5,10 +5,7 @@ const Userfeedbackschema = new mongoose.Schema({
     feedback : String
 })
 
-const UserFeedback = (global as any).UserFeedbackModel || mongoose.models.UserFeedback || mongoose.model("userFeedback", Userfeedbackschema);
+const UserFeedback = mongoose.models.userFeedbacks || mongoose.model("userFeedbacks", Userfeedbackschema);
 console.log("UserFeedback model loaded:", UserFeedback.modelName);
 
-if (!(global as any).UserFeedbackModel) {
-  (global as any).UserFeedbackModel = UserFeedback;
-}
 export default UserFeedback;

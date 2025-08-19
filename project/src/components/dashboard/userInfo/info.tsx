@@ -5,8 +5,14 @@ import Image from "next/image"
 import { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { LockKeyholeOpen, LockKeyhole } from 'lucide-react'
-
-export default function UserInfo({ onDataChange }: { onDataChange: (data: any) => void }) {
+interface Info{
+    fullName: string,
+        profession: string,
+        email: string,
+        contact: string,
+        about: string
+}
+export default function UserInfo({ onDataChange }: { onDataChange: (data: Info) => void }) {
     // console.log("in child", onDataChange)
     const [info, setInfo] = useState<{
         fullName: string,
