@@ -10,10 +10,10 @@ export default function ContactUs() {
 
             </div>
             <div className="flex justify-center items-center align-middle">
-                <div className=" p-10 h-[200px] w-[25%] bg-white rounded-4xl border-2 border-gray-300 hover:shadow-gray-500 hover:shadow-xl">
+                <div className=" p-10 h-[200px] w-[370px] bg-white rounded-4xl border-2 border-gray-300 hover:shadow-gray-500 hover:shadow-xl">
                     <div className="flex">
                     <div><Image src={"/email.png"} alt="email" height={40} width={60} /></div>
-                    <p className="m-1 text-2xl font-bold text-[#123458]">dummy@gmail.com</p>
+                    <p className="m-1 text-2xl font-bold text-[#123458]"><a href="mailto:dummy@gmail.com"> dummy@gmail.com</a></p>
                     </div>
                     <div className="text-xl text-gray-500">
                         We typically respond within 24 hours.
