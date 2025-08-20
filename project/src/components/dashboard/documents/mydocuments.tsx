@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 export default function MydocumentsPage(){
     const router = useRouter()
     const handlePortfolio = () => {
-        router.push("/documents/myPortfolio")
+        router.push("/dashboard/documents/myPortfolio")
     }
     const handleResume = () => {
-        router.push("/documents/myResume")
+        router.push("/dashboard/documents/myResume")
     }
     return(
         <>

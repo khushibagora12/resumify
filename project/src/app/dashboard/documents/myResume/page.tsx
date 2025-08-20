@@ -3,6 +3,7 @@ export default function MyResume(){
     return(
         <>
         <MyResumePage/>
+
         </>
     )
 }

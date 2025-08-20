@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 export default function MyResumePage(){
+    
     const [urls, setUrls] = useState([]);
-
     useEffect(() => {
             console.log("in useEffect")
             const fetchFunc = async () => {
@@ -24,7 +24,7 @@ export default function MyResumePage(){
         <div>
         {
             urls.map((myurl : string, idx : number) => (
-                <li key={idx}><Link href={myurl.resumePdf}>your resume {idx + 1}</Link></li>
+                <li key={idx}><Link href={myurl}>your resume {idx + 1}</Link></li>
             ))
         }
         </div>
